@@ -45,7 +45,6 @@ namespace AnthonySeymourGOL
                 {
                     int count = CountNeighborsToroidal(x, y);
 
-                    // combined two rules into one line as they SHOULD BE similar enough to combine without issue
                     if ((count < 2 || count > 3) && (universe[x, y] == true))
                         scratchPad[x, y] = !universe[x, y];
                     else if ((count == 2 || count == 3) && (universe[x, y] == true))
@@ -57,12 +56,14 @@ namespace AnthonySeymourGOL
 
             // Copy scratchPad to universe
             SwapArrays(ref scratchPad, ref universe);
-
+            
             // Increment generation count
             generations++;
 
             // Update status strip generations
             toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+
+            graphicsPanel1.Invalidate();
         }
 
         private int CountNeighborsToroidal(int x, int y)
@@ -94,6 +95,27 @@ namespace AnthonySeymourGOL
             return count;
         }
 
+        private int CountNeighborsFinite(int x, int y)
+        {
+            int count = 0;
+            int xLen = universe.GetLength(0);
+            int yLen = universe.GetLength(1);
+            for (int yOffset = -1; yOffset <= 1; yOffset++)
+            {
+                for (int xOffset = -1; xOffset <= 1; xOffset++)
+                {
+                    int xCheck = x + xOffset;
+                    int yCheck = y + yOffset;
+
+                    if ((xOffset == 0 && yOffset == 0) || (xCheck < 0) || (yCheck < 0) || (xCheck >= xLen) || (yCheck >= yLen))
+                        continue;
+
+                    if (universe[xCheck, yCheck] == true) count++;
+                }
+            }
+            return count;
+        }
+
         private void SwapArrays(ref bool[,] arr1, ref bool[,] arr2)
         {
             bool[,] temp = arr1;
@@ -105,7 +127,6 @@ namespace AnthonySeymourGOL
         private void Timer_Tick(object sender, EventArgs e)
         {
             NextGeneration();
-            graphicsPanel1.Invalidate();
         }
 
         private void graphicsPanel1_Paint(object sender, PaintEventArgs e)
