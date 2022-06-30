@@ -13,7 +13,8 @@ namespace AnthonySeymourGOL
     public partial class Form1 : Form
     {
         // The universe array
-        bool[,] universe = new bool[5, 5];
+        bool[,] universe = new bool[50, 50];
+        bool[,] scratchPad = new bool[50, 50];
 
         // Drawing colors
         Color gridColor = Color.Black;
@@ -38,7 +39,24 @@ namespace AnthonySeymourGOL
         // Calculate the next generation of cells
         private void NextGeneration()
         {
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+                for (int x = 0; x < universe.GetLength(0); x++)
+                {
+                    int count = CountNeighborsToroidal(x, y);
 
+                    // combined two rules into one line as they SHOULD BE similar enough to combine without issue
+                    if ((count < 2 || count > 3) && (universe[x, y] == true))
+                        scratchPad[x, y] = !universe[x, y];
+                    else if ((count == 2 || count == 3) && (universe[x, y] == true))
+                        scratchPad[x, y] = universe[x, y];
+                    else if ((count == 3) && (universe[x, y] == false))
+                        scratchPad[x, y] = !universe[x, y];
+                }
+            }
+
+            // Copy scratchPad to universe
+            SwapArrays(ref scratchPad, ref universe);
 
             // Increment generation count
             generations++;
@@ -47,10 +65,47 @@ namespace AnthonySeymourGOL
             toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
         }
 
+        private int CountNeighborsToroidal(int x, int y)
+        {
+            int count = 0;
+            int xLen = universe.GetLength(0);
+            int yLen = universe.GetLength(1);
+            for (int yOffset = -1; yOffset <= 1; yOffset++)
+            {
+                for (int xOffset = -1; xOffset <= 1; xOffset++)
+                {
+                    int xCheck = x + xOffset;
+                    int yCheck = y + yOffset;
+
+                    if ((xOffset == 0) && (yOffset == 0))
+                        continue;
+                    if (xCheck < 0)
+                        xCheck = xLen - 1;
+                    if (yCheck < 0)
+                        yCheck = yLen - 1;
+                    if (xCheck >= xLen)
+                        xCheck = 0;
+                    if (yCheck >= yLen)
+                        yCheck = 0;
+
+                    if (universe[xCheck, yCheck] == true) count++;
+                }
+            }
+            return count;
+        }
+
+        private void SwapArrays(ref bool[,] arr1, ref bool[,] arr2)
+        {
+            bool[,] temp = arr1;
+            arr1 = arr2;
+            arr2 = temp;
+        }
+
         // The event called by the timer every Interval milliseconds.
         private void Timer_Tick(object sender, EventArgs e)
         {
             NextGeneration();
+            graphicsPanel1.Invalidate();
         }
 
         private void graphicsPanel1_Paint(object sender, PaintEventArgs e)
