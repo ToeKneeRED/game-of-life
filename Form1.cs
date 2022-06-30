@@ -33,7 +33,7 @@ namespace AnthonySeymourGOL
             // Setup the timer
             timer.Interval = 100; // milliseconds
             timer.Tick += Timer_Tick;
-            timer.Enabled = true; // start timer running
+            timer.Enabled = false; // start timer paused
         }
 
         // Calculate the next generation of cells
@@ -198,6 +198,21 @@ namespace AnthonySeymourGOL
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            timer.Enabled = true;
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            timer.Enabled = false;
+        }
+
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            NextGeneration();
         }
     }
 }
