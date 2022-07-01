@@ -13,8 +13,8 @@ namespace AnthonySeymourGOL
     public partial class Form1 : Form
     {
         // The universe array
-        bool[,] universe = new bool[50, 50];
-        bool[,] scratchPad = new bool[50, 50];
+        bool[,] universe = new bool[25, 25];
+        bool[,] scratchPad = new bool[25, 25];
 
         // Drawing colors
         Color gridColor = Color.Black;
@@ -31,7 +31,7 @@ namespace AnthonySeymourGOL
             InitializeComponent();
 
             // Setup the timer
-            timer.Interval = 100; // milliseconds
+            timer.Interval = 50; // milliseconds
             timer.Tick += Timer_Tick;
             timer.Enabled = false; // start timer paused
         }
@@ -39,7 +39,6 @@ namespace AnthonySeymourGOL
         // Calculate the next generation of cells
         private void NextGeneration()
         {
-
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
@@ -49,7 +48,7 @@ namespace AnthonySeymourGOL
                 }
             }
 
-                    for (int y = 0; y < universe.GetLength(1); y++)
+            for (int y = 0; y < universe.GetLength(1); y++)
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
@@ -117,7 +116,8 @@ namespace AnthonySeymourGOL
                     int xCheck = x + xOffset;
                     int yCheck = y + yOffset;
 
-                    if ((xOffset == 0 && yOffset == 0) || (xCheck < 0) || (yCheck < 0) || (xCheck >= xLen) || (yCheck >= yLen))
+                    if ((xOffset == 0 && yOffset == 0) || (xCheck < 0) || 
+                        (yCheck < 0) || (xCheck >= xLen) || (yCheck >= yLen))
                         continue;
 
                     if (universe[xCheck, yCheck] == true) count++;
@@ -224,6 +224,22 @@ namespace AnthonySeymourGOL
         {
             timer.Enabled = false;
             NextGeneration();
+        }
+
+        private void newToolStripButton_Click(object sender, EventArgs e)
+        {
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+                for (int x = 0; x < universe.GetLength(0); x++)
+                {
+                    if (universe[x, y] == true)
+                        universe[x, y] = !universe[x, y];
+                }
+            }
+            timer.Enabled = false;
+            generations = 0;
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+            graphicsPanel1.Invalidate();
         }
     }
 }
