@@ -39,7 +39,17 @@ namespace AnthonySeymourGOL
         // Calculate the next generation of cells
         private void NextGeneration()
         {
+
             for (int y = 0; y < universe.GetLength(1); y++)
+            {
+                for (int x = 0; x < universe.GetLength(0); x++)
+                {
+                    if (scratchPad[x, y] == true)
+                        scratchPad[x, y] = !scratchPad[x, y];
+                }
+            }
+
+                    for (int y = 0; y < universe.GetLength(1); y++)
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
@@ -212,6 +222,7 @@ namespace AnthonySeymourGOL
 
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
+            timer.Enabled = false;
             NextGeneration();
         }
     }
