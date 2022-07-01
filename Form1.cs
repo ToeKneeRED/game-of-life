@@ -18,7 +18,7 @@ namespace AnthonySeymourGOL
 
         // Drawing colors
         Color gridColor = Color.Black;
-        Color cellColor = Color.Gray;
+        Color cellColor = Color.LightGray;
 
         // The Timer class
         Timer timer = new Timer();
@@ -31,7 +31,7 @@ namespace AnthonySeymourGOL
             InitializeComponent();
 
             // Setup the timer
-            timer.Interval = 50; // milliseconds
+            timer.Interval = 25; // milliseconds
             timer.Tick += Timer_Tick;
             timer.Enabled = false; // start timer paused
         }
@@ -54,12 +54,12 @@ namespace AnthonySeymourGOL
                 {
                     int count = CountNeighborsToroidal(x, y);
 
-                    if ((count < 2 || count > 3) && (universe[x, y] == true))
+                    if ((count < 2 || count > 3) && (universe[x, y] == true) ||
+                        (count == 3) && (universe[x, y] == false))
                         scratchPad[x, y] = !universe[x, y];
                     else if ((count == 2 || count == 3) && (universe[x, y] == true))
                         scratchPad[x, y] = universe[x, y];
-                    else if ((count == 3) && (universe[x, y] == false))
-                        scratchPad[x, y] = !universe[x, y];
+
                 }
             }
 
@@ -153,6 +153,11 @@ namespace AnthonySeymourGOL
             // A Brush for filling living cells interiors (color)
             Brush cellBrush = new SolidBrush(cellColor);
 
+            StringFormat stringFormat = new StringFormat();
+            stringFormat.Alignment = StringAlignment.Center;
+            stringFormat.LineAlignment = StringAlignment.Center;
+            Brush neighborCountColor = new SolidBrush(Color.Red);
+
             // Iterate through the universe in the y, top to bottom
             for (int y = 0; y < universe.GetLength(1); y++)
             {
@@ -166,6 +171,8 @@ namespace AnthonySeymourGOL
                     cellRect.Width = cellWidth;
                     cellRect.Height = cellHeight;
 
+                    Font font = new Font("Consolas", cellHeight / 2);
+
                     // Fill the cell with a brush if alive
                     if (universe[x, y] == true)
                     {
@@ -174,12 +181,29 @@ namespace AnthonySeymourGOL
 
                     // Outline the cell with a pen
                     e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
+
+                    int neighbors = CountNeighborsToroidal(x, y);
+
+                    if (neighbors != 0)
+                    {
+                        // Reset color back to red
+                        neighborCountColor = new SolidBrush(Color.Red);
+
+                        // Only change brush color to green once a cell will live
+                        if ((neighbors == 2 || neighbors == 3) && (universe[x, y] == true) ||
+                            (neighbors == 3) && (universe[x, y] == false))
+                            neighborCountColor = new SolidBrush(Color.Green);
+
+                        // Draw the neighbor count into the currently iterated cell
+                        e.Graphics.DrawString(neighbors.ToString(), font, neighborCountColor, cellRect, stringFormat);
+                    }
                 }
             }
 
             // Cleaning up pens and brushes
             gridPen.Dispose();
             cellBrush.Dispose();
+            neighborCountColor.Dispose();
         }
 
         private void graphicsPanel1_MouseClick(object sender, MouseEventArgs e)
