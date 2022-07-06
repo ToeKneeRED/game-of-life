@@ -265,10 +265,5 @@ namespace AnthonySeymourGOL
             toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
             graphicsPanel1.Invalidate();
         }
-
-        private void newToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            newToolStripButton_Click(sender, e);
-        }
     }
 }
