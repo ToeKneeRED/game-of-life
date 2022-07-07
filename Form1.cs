@@ -179,6 +179,8 @@ namespace AnthonySeymourGOL
 
                     Font font = new Font("Consolas", cellHeight / 2);
 
+                    int neighbors = 0;
+
                     // Fill the cell with a brush if alive
                     if (universe[x, y] == true)
                     {
@@ -189,7 +191,6 @@ namespace AnthonySeymourGOL
                     if(gridToolStripMenuItem.Checked == true)
                         e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
 
-                    int neighbors = 0;
 
                     // Check what method is used to get proper neighbor count
                     if (toroidalToolStripMenuItem.Checked == true)
@@ -197,6 +198,7 @@ namespace AnthonySeymourGOL
                     else if (finiteToolStripMenuItem.Checked == true)
                         neighbors = CountNeighborsFinite(x, y);
 
+                    // 0 zero so 0s dont show in universe
                     if (neighbors != 0)
                     {
                         // Reset color back to red
@@ -212,7 +214,6 @@ namespace AnthonySeymourGOL
                     }
                 }
             }
-
             // Cleaning up pens and brushes
             gridPen.Dispose();
             cellBrush.Dispose();
@@ -239,10 +240,7 @@ namespace AnthonySeymourGOL
 
                 // Tell Windows you need to repaint
                 graphicsPanel1.Invalidate();
-            } else if(e.Button == MouseButtons.Right)
-            {
-                graphicsPanel1.Invalidate();
-            }
+            } 
         }
 
         // Exit
@@ -311,12 +309,14 @@ namespace AnthonySeymourGOL
 
         private void toroidalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Check if other option is selected
+            // Check if other method is selected
             // If so, clear the universe
             if (finiteToolStripMenuItem.Checked == true)
             {
                 newToolStripButton_Click(sender, e);
             }
+
+            // Set menu items to proper checked states
             finiteToolStripMenuItem.Checked = false;
             toroidalToolStripMenuItem.Checked = true;
             finiteToolStripMenuItem1.Checked = false;
@@ -325,12 +325,14 @@ namespace AnthonySeymourGOL
 
         private void finiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Check if other option is selected
+            // Check if other method is selected
             // If so, clear the universe
             if (toroidalToolStripMenuItem.Checked == true)
             {
                 newToolStripButton_Click(sender, e);
             }
+
+            // Set menu items to proper checked states
             toroidalToolStripMenuItem.Checked = false;
             finiteToolStripMenuItem.Checked = true;
             toroidalToolStripMenuItem1.Checked = false;
@@ -347,7 +349,7 @@ namespace AnthonySeymourGOL
 
         private void hUDToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Invert HUD option when clicked
+            // Invert HUD option when clicked in toolstrip and context menu
             hUDToolStripMenuItem.Checked = !hUDToolStripMenuItem.Checked;
             hUDToolStripMenuItem1.Checked = !hUDToolStripMenuItem1.Checked;
             graphicsPanel1.Invalidate();
@@ -355,7 +357,7 @@ namespace AnthonySeymourGOL
 
         private void neighborCountToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Invert HUD option when clicked
+            // Invert neighbor count option when clicked in toolstrip and context menu
             neighborCountToolStripMenuItem.Checked = !neighborCountToolStripMenuItem.Checked;
             neighborCountToolStripMenuItem1.Checked = !neighborCountToolStripMenuItem1.Checked;
             graphicsPanel1.Invalidate();
