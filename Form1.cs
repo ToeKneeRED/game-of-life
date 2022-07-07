@@ -239,6 +239,9 @@ namespace AnthonySeymourGOL
 
                 // Tell Windows you need to repaint
                 graphicsPanel1.Invalidate();
+            } else if(e.Button == MouseButtons.Right)
+            {
+                graphicsPanel1.Invalidate();
             }
         }
 
@@ -316,6 +319,8 @@ namespace AnthonySeymourGOL
             }
             finiteToolStripMenuItem.Checked = false;
             toroidalToolStripMenuItem.Checked = true;
+            finiteToolStripMenuItem1.Checked = false;
+            toroidalToolStripMenuItem1.Checked = true;
         }
 
         private void finiteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -328,12 +333,31 @@ namespace AnthonySeymourGOL
             }
             toroidalToolStripMenuItem.Checked = false;
             finiteToolStripMenuItem.Checked = true;
+            toroidalToolStripMenuItem1.Checked = false;
+            finiteToolStripMenuItem1.Checked = true;
         }
 
         private void gridToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Invert grid option when clicked
             gridToolStripMenuItem.Checked = !gridToolStripMenuItem.Checked;
+            gridToolStripMenuItem1.Checked = !gridToolStripMenuItem1.Checked;
+            graphicsPanel1.Invalidate();
+        }
+
+        private void hUDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Invert HUD option when clicked
+            hUDToolStripMenuItem.Checked = !hUDToolStripMenuItem.Checked;
+            hUDToolStripMenuItem1.Checked = !hUDToolStripMenuItem1.Checked;
+            graphicsPanel1.Invalidate();
+        }
+
+        private void neighborCountToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Invert HUD option when clicked
+            neighborCountToolStripMenuItem.Checked = !neighborCountToolStripMenuItem.Checked;
+            neighborCountToolStripMenuItem1.Checked = !neighborCountToolStripMenuItem1.Checked;
             graphicsPanel1.Invalidate();
         }
     }
