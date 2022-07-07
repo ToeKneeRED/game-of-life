@@ -229,27 +229,32 @@ namespace AnthonySeymourGOL
             }
         }
 
+        // Exit
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        // Play
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             timer.Enabled = true;
         }
 
+        // Pause
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             timer.Enabled = false;
         }
 
+        // Next
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
             timer.Enabled = false;
             NextGeneration();
         }
 
+        // New
         private void newToolStripButton_Click(object sender, EventArgs e)
         {
             for (int y = 0; y < universe.GetLength(1); y++)
