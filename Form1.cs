@@ -270,5 +270,27 @@ namespace AnthonySeymourGOL
             toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
             graphicsPanel1.Invalidate();
         }
+
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch(e.KeyCode)
+            {
+                // Play
+                case Keys.F5:
+                    timer.Enabled = true;
+                    break;
+                // Pause
+                case Keys.F6:
+                    timer.Enabled = false;
+                    break;
+                // Next
+                case Keys.F7:
+                    timer.Enabled = false;
+                    NextGeneration();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
