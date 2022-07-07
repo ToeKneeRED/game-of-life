@@ -52,7 +52,12 @@ namespace AnthonySeymourGOL
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
-                    int count = CountNeighborsToroidal(x, y);
+                    int count = 0;
+
+                    if (toroidalToolStripMenuItem.Checked == true)
+                        count = CountNeighborsToroidal(x, y);
+                    else if (finiteToolStripMenuItem.Checked == true)
+                        count = CountNeighborsFinite(x, y);
 
                     if ((count < 2 || count > 3) && (universe[x, y] == true) ||
                         (count == 3) && (universe[x, y] == false))
@@ -182,7 +187,12 @@ namespace AnthonySeymourGOL
                     // Outline the cell with a pen
                     e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
 
-                    int neighbors = CountNeighborsToroidal(x, y);
+                    int neighbors = 0;
+
+                    if (toroidalToolStripMenuItem.Checked == true)
+                        neighbors = CountNeighborsToroidal(x, y);
+                    else if (finiteToolStripMenuItem.Checked == true)
+                        neighbors = CountNeighborsFinite(x, y);
 
                     if (neighbors != 0)
                     {
@@ -291,6 +301,30 @@ namespace AnthonySeymourGOL
                 default:
                     break;
             }
+        }
+
+        private void toroidalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Check if other option in selected
+            // If so, clear the universe
+            if (finiteToolStripMenuItem.Checked == true)
+            {
+                newToolStripButton_Click(sender, e);
+            }
+            finiteToolStripMenuItem.Checked = false;
+            toroidalToolStripMenuItem.Checked = true;
+        }
+
+        private void finiteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Check if other option in selected
+            // If so, clear the universe
+            if (toroidalToolStripMenuItem.Checked == true)
+            {
+                newToolStripButton_Click(sender, e);
+            }
+            toroidalToolStripMenuItem.Checked = false;
+            finiteToolStripMenuItem.Checked = true;
         }
     }
 }
