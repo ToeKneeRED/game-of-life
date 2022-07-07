@@ -54,6 +54,7 @@ namespace AnthonySeymourGOL
                 {
                     int count = 0;
 
+                    // Check what method is to be used for next generation
                     if (toroidalToolStripMenuItem.Checked == true)
                         count = CountNeighborsToroidal(x, y);
                     else if (finiteToolStripMenuItem.Checked == true)
@@ -184,11 +185,13 @@ namespace AnthonySeymourGOL
                         e.Graphics.FillRectangle(cellBrush, cellRect);
                     }
 
-                    // Outline the cell with a pen
-                    e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
+                    // Outline the cell with a pen while grid option is checked
+                    if(gridToolStripMenuItem.Checked == true)
+                        e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
 
                     int neighbors = 0;
 
+                    // Check what method is used to get proper neighbor count
                     if (toroidalToolStripMenuItem.Checked == true)
                         neighbors = CountNeighborsToroidal(x, y);
                     else if (finiteToolStripMenuItem.Checked == true)
@@ -305,7 +308,7 @@ namespace AnthonySeymourGOL
 
         private void toroidalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Check if other option in selected
+            // Check if other option is selected
             // If so, clear the universe
             if (finiteToolStripMenuItem.Checked == true)
             {
@@ -317,7 +320,7 @@ namespace AnthonySeymourGOL
 
         private void finiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Check if other option in selected
+            // Check if other option is selected
             // If so, clear the universe
             if (toroidalToolStripMenuItem.Checked == true)
             {
@@ -325,6 +328,13 @@ namespace AnthonySeymourGOL
             }
             toroidalToolStripMenuItem.Checked = false;
             finiteToolStripMenuItem.Checked = true;
+        }
+
+        private void gridToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Invert grid option when clicked
+            gridToolStripMenuItem.Checked = !gridToolStripMenuItem.Checked;
+            graphicsPanel1.Invalidate();
         }
     }
 }
