@@ -210,26 +210,28 @@ namespace AnthonySeymourGOL
                     if(gridToolStripMenuItem.Checked == true)
                         e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
 
-
-                    // Check what method is used to get proper neighbor count
-                    if (toroidalToolStripMenuItem.Checked == true)
-                        neighbors = CountNeighborsToroidal(x, y);
-                    else if (finiteToolStripMenuItem.Checked == true)
-                        neighbors = CountNeighborsFinite(x, y);
-
-                    // ensure 0s dont show in universe
-                    if (neighbors != 0)
+                    if (neighborCountToolStripMenuItem.Checked == true)
                     {
-                        // Reset color back to red
-                        neighborCountColor = new SolidBrush(Color.Red);
+                        // Check what method is used to get proper neighbor count
+                        if (toroidalToolStripMenuItem.Checked == true)
+                            neighbors = CountNeighborsToroidal(x, y);
+                        else if (finiteToolStripMenuItem.Checked == true)
+                            neighbors = CountNeighborsFinite(x, y);
 
-                        // Only change brush color to green once a cell will live
-                        if ((neighbors == 2 || neighbors == 3) && (universe[x, y] == true) ||
-                            (neighbors == 3) && (universe[x, y] == false))
-                            neighborCountColor = new SolidBrush(Color.Green);
+                        // ensure 0s dont show in universe
+                        if (neighbors != 0)
+                        {
+                            // Reset color back to red
+                            neighborCountColor = new SolidBrush(Color.Red);
 
-                        // Draw the neighbor count into the currently iterated cell
-                        e.Graphics.DrawString(neighbors.ToString(), font, neighborCountColor, cellRect, stringFormat);
+                            // Only change brush color to green once a cell will live
+                            if ((neighbors == 2 || neighbors == 3) && (universe[x, y] == true) ||
+                                (neighbors == 3) && (universe[x, y] == false))
+                                neighborCountColor = new SolidBrush(Color.Green);
+
+                            // Draw the neighbor count into the currently iterated cell
+                            e.Graphics.DrawString(neighbors.ToString(), font, neighborCountColor, cellRect, stringFormat);
+                        }
                     }
                 }
             }
