@@ -12,7 +12,6 @@ namespace AnthonySeymourGOL
 {
     public partial class Form1 : Form
     {
-        // The universe array
         bool[,] universe = new bool[25, 25];
         bool[,] scratchPad = new bool[25, 25];
 
@@ -25,6 +24,10 @@ namespace AnthonySeymourGOL
 
         // Generation count
         int generations = 0;
+
+        // Run To Check
+        bool bRunToGeneration = false;
+        int? runToGeneration = null;
 
         public Form1()
         {
@@ -39,6 +42,13 @@ namespace AnthonySeymourGOL
         // Calculate the next generation of cells
         private void NextGeneration()
         {
+            if ((bRunToGeneration == true) && (generations >= runToGeneration))
+            {
+                timer.Enabled = false;
+                bRunToGeneration = false;
+                return;
+            }
+
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
@@ -84,12 +94,14 @@ namespace AnthonySeymourGOL
         private int CountNeighborsToroidal(int x, int y)
         {
             int count = 0;
-            int xLen = universe.GetLength(0);
-            int yLen = universe.GetLength(1);
+            int xLen = universe.GetLength(0); // universe x length
+            int yLen = universe.GetLength(1); // universe y length
+
             for (int yOffset = -1; yOffset <= 1; yOffset++)
             {
                 for (int xOffset = -1; xOffset <= 1; xOffset++)
                 {
+                    // indexes to get accurate neighbor count
                     int xCheck = x + xOffset;
                     int yCheck = y + yOffset;
 
@@ -104,6 +116,7 @@ namespace AnthonySeymourGOL
                     if (yCheck >= yLen)
                         yCheck = 0;
 
+                    // if cell is on, add to the neighbor count
                     if (universe[xCheck, yCheck] == true) count++;
                 }
             }
@@ -113,25 +126,30 @@ namespace AnthonySeymourGOL
         private int CountNeighborsFinite(int x, int y)
         {
             int count = 0;
-            int xLen = universe.GetLength(0);
-            int yLen = universe.GetLength(1);
+            int xLen = universe.GetLength(0); // universe x length
+            int yLen = universe.GetLength(1); // universe y length
+
             for (int yOffset = -1; yOffset <= 1; yOffset++)
             {
                 for (int xOffset = -1; xOffset <= 1; xOffset++)
                 {
+                    // indexes to get accurate neighbor count
                     int xCheck = x + xOffset;
                     int yCheck = y + yOffset;
 
+                    // Boundary checks
                     if ((xOffset == 0 && yOffset == 0) || (xCheck < 0) || 
                         (yCheck < 0) || (xCheck >= xLen) || (yCheck >= yLen))
                         continue;
 
+                    // if cell is on, add to the neighbor count
                     if (universe[xCheck, yCheck] == true) count++;
                 }
             }
             return count;
         }
 
+        // Method for swapping 2D Arrays
         private void SwapArrays(ref bool[,] arr1, ref bool[,] arr2)
         {
             bool[,] temp = arr1;
@@ -159,6 +177,7 @@ namespace AnthonySeymourGOL
             // A Brush for filling living cells interiors (color)
             Brush cellBrush = new SolidBrush(cellColor);
 
+            // StringFormat for neighbor colors and text
             StringFormat stringFormat = new StringFormat();
             stringFormat.Alignment = StringAlignment.Center;
             stringFormat.LineAlignment = StringAlignment.Center;
@@ -243,32 +262,32 @@ namespace AnthonySeymourGOL
             } 
         }
 
-        // Exit
+        // Exit menu item
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        // Play
+        // Play button
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             timer.Enabled = true;
         }
 
-        // Pause
+        // Pause button
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             timer.Enabled = false;
         }
 
-        // Next
+        // Next button
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
             timer.Enabled = false;
             NextGeneration();
         }
 
-        // New
+        // New button
         private void newToolStripButton_Click(object sender, EventArgs e)
         {
             for (int y = 0; y < universe.GetLength(1); y++)
@@ -279,12 +298,14 @@ namespace AnthonySeymourGOL
                         universe[x, y] = !universe[x, y];
                 }
             }
+
             timer.Enabled = false;
             generations = 0;
             toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
             graphicsPanel1.Invalidate();
         }
 
+        // Keybinds
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
             switch(e.KeyCode)
@@ -344,6 +365,7 @@ namespace AnthonySeymourGOL
             // Invert grid option when clicked
             gridToolStripMenuItem.Checked = !gridToolStripMenuItem.Checked;
             gridToolStripMenuItem1.Checked = !gridToolStripMenuItem1.Checked;
+
             graphicsPanel1.Invalidate();
         }
 
@@ -352,6 +374,7 @@ namespace AnthonySeymourGOL
             // Invert HUD option when clicked in toolstrip and context menu
             hUDToolStripMenuItem.Checked = !hUDToolStripMenuItem.Checked;
             hUDToolStripMenuItem1.Checked = !hUDToolStripMenuItem1.Checked;
+
             graphicsPanel1.Invalidate();
         }
 
@@ -360,6 +383,7 @@ namespace AnthonySeymourGOL
             // Invert neighbor count option when clicked in toolstrip and context menu
             neighborCountToolStripMenuItem.Checked = !neighborCountToolStripMenuItem.Checked;
             neighborCountToolStripMenuItem1.Checked = !neighborCountToolStripMenuItem1.Checked;
+
             graphicsPanel1.Invalidate();
         }
 
@@ -367,14 +391,18 @@ namespace AnthonySeymourGOL
         {
             ModalDialog toModal = new ModalDialog();
 
+            // Set minimum number on numbericupdown in Run To ModalDialog
+            // to current generation int
             toModal.SetNumber(generations);
 
             if (DialogResult.OK == toModal.ShowDialog())
             {
-                int runToGeneration = toModal.GetNumber();
+                runToGeneration = toModal.GetNumber();
 
-                while (generations < runToGeneration)
-                    NextGeneration();
+                // NextGeneration() checks if bRunToGeneration is true
+                // to disable timer on certain generation
+                bRunToGeneration = true;
+                timer.Enabled = true;
             }
             toModal.Dispose();
         }
