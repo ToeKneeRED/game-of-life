@@ -272,12 +272,30 @@ namespace AnthonySeymourGOL
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             timer.Enabled = true;
+
+            if (timer.Enabled == true)
+            {
+                toolStripButton1.Enabled = false; // Disable Play button
+                startToolStripMenuItem.Enabled = false; // Disable Start menu item
+                toolStripButton2.Enabled = true; // Enable Pause button
+                stopToolStripMenuItem.Enabled = true; // Enable Stop menu item
+            }
+
+            graphicsPanel1.Invalidate();
         }
 
         // Pause button
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             timer.Enabled = false;
+
+            if(timer.Enabled == false)
+            {
+                toolStripButton1.Enabled = true; // Enable Play button
+                startToolStripMenuItem.Enabled = true; // Enable Start menu item 
+                toolStripButton2.Enabled = false; // Disable Pause button
+                stopToolStripMenuItem.Enabled = false; // Disable Stop menu item
+            }
         }
 
         // Next button
@@ -285,6 +303,14 @@ namespace AnthonySeymourGOL
         {
             timer.Enabled = false;
             NextGeneration();
+
+            if (timer.Enabled == false)
+            {
+                toolStripButton1.Enabled = true; // Enable Play button
+                startToolStripMenuItem.Enabled = true; // Enable Start menu item
+                toolStripButton2.Enabled = false; // Disable Pause button
+                stopToolStripMenuItem.Enabled = false; // Disable Stop menu item
+            }
         }
 
         // New button
@@ -312,15 +338,15 @@ namespace AnthonySeymourGOL
             {
                 // Play
                 case Keys.F5:
-                    timer.Enabled = true;
+                    toolStripButton1_Click(sender, e);
                     break;
                 // Pause
                 case Keys.F6:
-                    timer.Enabled = false;
+                    toolStripButton2_Click(sender, e);
                     break;
                 // Next
                 case Keys.F7:
-                    timer.Enabled = false;
+                    toolStripButton3_Click(sender, e);
                     NextGeneration();
                     break;
                 default:

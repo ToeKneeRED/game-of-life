@@ -78,6 +78,7 @@ namespace AnthonySeymourGOL
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ModalDialog";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ModalDialog";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
