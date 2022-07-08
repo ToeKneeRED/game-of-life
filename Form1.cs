@@ -198,7 +198,7 @@ namespace AnthonySeymourGOL
                     else if (finiteToolStripMenuItem.Checked == true)
                         neighbors = CountNeighborsFinite(x, y);
 
-                    // 0 zero so 0s dont show in universe
+                    // ensure 0s dont show in universe
                     if (neighbors != 0)
                     {
                         // Reset color back to red
@@ -361,6 +361,22 @@ namespace AnthonySeymourGOL
             neighborCountToolStripMenuItem.Checked = !neighborCountToolStripMenuItem.Checked;
             neighborCountToolStripMenuItem1.Checked = !neighborCountToolStripMenuItem1.Checked;
             graphicsPanel1.Invalidate();
+        }
+
+        private void toToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ModalDialog toModal = new ModalDialog();
+
+            toModal.SetNumber(generations);
+
+            if (DialogResult.OK == toModal.ShowDialog())
+            {
+                int runToGeneration = toModal.GetNumber();
+
+                while (generations < runToGeneration)
+                    NextGeneration();
+            }
+            toModal.Dispose();
         }
     }
 }
