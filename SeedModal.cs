@@ -22,15 +22,5 @@ namespace AnthonySeymourGOL
             get { return (int)numericUpDown1.Value; }
             set { numericUpDown1.Value = value; }
         }
-
-        //public int GetSeed()
-        //{
-        //    return (int)numericUpDown1.Value;
-        //}
-        //
-        //public void SetSeed(int number)
-        //{
-        //    numericUpDown1.Value = number;
-        //}
     }
 }

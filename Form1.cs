@@ -443,6 +443,7 @@ namespace AnthonySeymourGOL
         {
             Random rand = new Random(num);
 
+            // Iterate through universe
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
@@ -467,7 +468,7 @@ namespace AnthonySeymourGOL
         private void fromSeedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SeedModal modal = new SeedModal();
-
+            
             if(modal.ShowDialog() == DialogResult.OK)
             {
                 int seed = modal.Seed;
