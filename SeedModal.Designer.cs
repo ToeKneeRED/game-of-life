@@ -58,6 +58,11 @@ namespace AnthonySeymourGOL
             // numericUpDown1
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(68, 11);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            1215752192,
+            23,
+            0,
+            0});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(155, 20);
             this.numericUpDown1.TabIndex = 3;

@@ -29,6 +29,9 @@ namespace AnthonySeymourGOL
         bool bRunToGeneration = false;
         int? runToGeneration = null;
 
+        // Randomize seed
+        int seed = 0;
+
         public Form1()
         {
             InitializeComponent();
@@ -37,6 +40,8 @@ namespace AnthonySeymourGOL
             timer.Interval = 35; // milliseconds
             timer.Tick += Timer_Tick;
             timer.Enabled = false; // start timer paused
+
+            toolStripStatusLabelSeed.Text = "Seed: " + seed.ToString();
         }
 
         // Calculate the next generation of cells
@@ -86,7 +91,7 @@ namespace AnthonySeymourGOL
             generations++;
 
             // Update status strip generations
-            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+            toolStripStatusLabelGenerations.Text = "Generations: " + generations.ToString();
 
             graphicsPanel1.Invalidate();
         }
@@ -441,6 +446,7 @@ namespace AnthonySeymourGOL
 
         private void Randomize(int num)
         {
+            // Get random number from num seed
             Random rand = new Random(num);
 
             // Iterate through universe
@@ -448,6 +454,8 @@ namespace AnthonySeymourGOL
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
+                    // if random number generated is even
+                    // cell is on otherwise cell is off
                     if (rand.Next() % 2 == 0)
                         universe[x, y] = true;
                     else
@@ -468,12 +476,19 @@ namespace AnthonySeymourGOL
         private void fromSeedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SeedModal modal = new SeedModal();
+
+            // Set numericUpDown value to the current seed
+            modal.Seed = seed;
             
             if(modal.ShowDialog() == DialogResult.OK)
             {
-                int seed = modal.Seed;
+                // Set seed to the value entered on the modal
+                // and randomize based on that seed
+                seed = modal.Seed;
+                newToolStripButton_Click(sender, e);
                 Randomize(seed);
             }
+            toolStripStatusLabelSeed.Text = "Seed: " + seed.ToString();
             graphicsPanel1.Invalidate();
         }
     }
