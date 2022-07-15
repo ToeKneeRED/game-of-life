@@ -42,6 +42,10 @@ namespace AnthonySeymourGOL
         {
             InitializeComponent();
 
+            graphicsPanel1.BackColor = Properties.Settings.Default.BackColor;
+            cellColor = Properties.Settings.Default.CellColor;
+            gridColor = Properties.Settings.Default.GridColor;
+
             // Setup the timer
             timer.Interval = interval; // milliseconds
             timer.Tick += Timer_Tick;
@@ -509,6 +513,7 @@ namespace AnthonySeymourGOL
                 toolStripStatusLabelSeed.Text = "Seed: " + seed.ToString();
                 Randomize(seed);
             }
+            modal.Dispose();
         }
 
         // Randomize From Current Seed
@@ -520,5 +525,60 @@ namespace AnthonySeymourGOL
             toolStripStatusLabelSeed.Text = "Seed: " + seed.ToString();
             Randomize(seed);
         }
+
+        // Settings Back Color Menu Item
+        private void backColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog dlg = new ColorDialog();
+
+            dlg.Color = graphicsPanel1.BackColor;
+
+            if(dlg.ShowDialog() == DialogResult.OK)
+            {
+                graphicsPanel1.BackColor = dlg.Color;
+            }
+            dlg.Dispose();
+        }
+
+        // Settings Cell Color Menu Item
+        private void cellColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog dlg = new ColorDialog();
+
+            dlg.Color = cellColor;
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                cellColor = dlg.Color;
+            }
+            dlg.Dispose();
+            graphicsPanel1.Invalidate();
+        }
+        
+        // Settings Grid Color Menu Item
+        private void gridColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog dlg = new ColorDialog();
+
+            dlg.Color = gridColor;
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                gridColor = dlg.Color;
+            }
+            dlg.Dispose();
+            graphicsPanel1.Invalidate();
+        }
+
+        // FormClosing in case need to cancel the close
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.BackColor = graphicsPanel1.BackColor;
+            Properties.Settings.Default.CellColor = cellColor;
+            Properties.Settings.Default.GridColor = gridColor;
+
+            Properties.Settings.Default.Save();
+        }
+
     }
 }
