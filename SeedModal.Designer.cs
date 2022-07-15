@@ -80,6 +80,7 @@ namespace AnthonySeymourGOL
             this.MinimizeBox = false;
             this.Name = "SeedModal";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SeedModal";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);

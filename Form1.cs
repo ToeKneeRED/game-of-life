@@ -468,8 +468,13 @@ namespace AnthonySeymourGOL
         // Randomize From Time
         private void fromTimeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Seed equal to the ticks representing current date
+            // and time then update seed text, clear universe,
+            // and randomize based on seed
+            seed = (int)DateTime.Now.Ticks;
+            toolStripStatusLabelSeed.Text = "Seed: " + seed.ToString();
             newToolStripButton_Click(sender, e);
-            Randomize((int)DateTime.Now.Ticks);
+            Randomize(seed);
         }
 
         // Randomize From Seed
@@ -486,10 +491,19 @@ namespace AnthonySeymourGOL
                 // and randomize based on that seed
                 seed = modal.Seed;
                 newToolStripButton_Click(sender, e);
+                toolStripStatusLabelSeed.Text = "Seed: " + seed.ToString();
                 Randomize(seed);
             }
+        }
+
+        // Randomize From Current Seed
+        private void fromCurrentSeedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Clear universe then set seed text
+            // and randomize from current seed
+            newToolStripButton_Click(sender, e);
             toolStripStatusLabelSeed.Text = "Seed: " + seed.ToString();
-            graphicsPanel1.Invalidate();
+            Randomize(seed);
         }
     }
 }
