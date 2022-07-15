@@ -84,6 +84,7 @@ namespace AnthonySeymourGOL
                     else if (finiteToolStripMenuItem.Checked == true)
                         count = CountNeighborsFinite(x, y);
 
+                    // Rules of life
                     if ((count < 2 || count > 3) && (universe[x, y] == true) ||
                         (count == 3) && (universe[x, y] == false))
                         scratchPad[x, y] = !universe[x, y];
@@ -119,6 +120,7 @@ namespace AnthonySeymourGOL
                     int xCheck = x + xOffset;
                     int yCheck = y + yOffset;
 
+                    // Boundary checks
                     if ((xOffset == 0) && (yOffset == 0))
                         continue;
                     if (xCheck < 0)
@@ -278,13 +280,13 @@ namespace AnthonySeymourGOL
             } 
         }
 
-        // Exit menu item
+        // Exit Menu Item
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        // Play button
+        // Play Button
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             timer.Enabled = true;
@@ -300,7 +302,7 @@ namespace AnthonySeymourGOL
             graphicsPanel1.Invalidate();
         }
 
-        // Pause button
+        // Pause Button
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             timer.Enabled = false;
@@ -314,7 +316,7 @@ namespace AnthonySeymourGOL
             }
         }
 
-        // Next button
+        // Next Button
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
             timer.Enabled = false;
@@ -329,7 +331,7 @@ namespace AnthonySeymourGOL
             }
         }
 
-        // New button
+        // New Button
         private void newToolStripButton_Click(object sender, EventArgs e)
         {
             for (int y = 0; y < universe.GetLength(1); y++)
