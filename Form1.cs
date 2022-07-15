@@ -439,24 +439,6 @@ namespace AnthonySeymourGOL
             toModal.Dispose();
         }
 
-        private void Randomize()
-        {
-            Random rand = new Random();
-
-            for (int y = 0; y < universe.GetLength(1); y++)
-            {
-                for (int x = 0; x < universe.GetLength(0); x++)
-                {
-                    if (rand.Next() % 2 == 0)
-                        universe[x, y] = true;
-                    else
-                        universe[x, y] = false;
-
-                }
-            }
-            graphicsPanel1.Invalidate();
-        }
-
         private void Randomize(int num)
         {
             Random rand = new Random(num);
@@ -474,10 +456,24 @@ namespace AnthonySeymourGOL
             graphicsPanel1.Invalidate();
         }
 
+        // Randomize From Time
         private void fromTimeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             newToolStripButton_Click(sender, e);
             Randomize((int)DateTime.Now.Ticks);
+        }
+
+        // Randomize From Seed
+        private void fromSeedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SeedModal modal = new SeedModal();
+
+            if(modal.ShowDialog() == DialogResult.OK)
+            {
+                int seed = modal.Seed;
+                Randomize(seed);
+            }
+            graphicsPanel1.Invalidate();
         }
     }
 }
