@@ -69,5 +69,41 @@ namespace AnthonySeymourGOL.Properties {
                 this["Gridx10Color"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool HUDVisible {
+            get {
+                return ((bool)(this["HUDVisible"]));
+            }
+            set {
+                this["HUDVisible"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool NeighborCountVisible {
+            get {
+                return ((bool)(this["NeighborCountVisible"]));
+            }
+            set {
+                this["NeighborCountVisible"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool GridVisible {
+            get {
+                return ((bool)(this["GridVisible"]));
+            }
+            set {
+                this["GridVisible"] = value;
+            }
+        }
     }
 }

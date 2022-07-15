@@ -12,8 +12,8 @@ namespace AnthonySeymourGOL
 {
     public partial class Form1 : Form
     {
-        bool[,] universe = new bool[25, 25];
-        bool[,] scratchPad = new bool[25, 25];
+        bool[,] universe = new bool[30, 30];
+        bool[,] scratchPad = new bool[30, 30];
 
         // Drawing colors
         Color gridColor = Color.Gray;
@@ -42,9 +42,15 @@ namespace AnthonySeymourGOL
         {
             InitializeComponent();
 
+            // Check settings for user-saved Color options
             graphicsPanel1.BackColor = Properties.Settings.Default.BackColor;
             cellColor = Properties.Settings.Default.CellColor;
             gridColor = Properties.Settings.Default.GridColor;
+
+            // Check settings for user-saved View options
+            hUDToolStripMenuItem.Checked = Properties.Settings.Default.HUDVisible;
+            neighborCountToolStripMenuItem.Checked = Properties.Settings.Default.NeighborCountVisible;
+            gridToolStripMenuItem.Checked = Properties.Settings.Default.GridVisible;
 
             // Setup the timer
             timer.Interval = interval; // milliseconds
@@ -576,6 +582,10 @@ namespace AnthonySeymourGOL
             Properties.Settings.Default.BackColor = graphicsPanel1.BackColor;
             Properties.Settings.Default.CellColor = cellColor;
             Properties.Settings.Default.GridColor = gridColor;
+
+            Properties.Settings.Default.HUDVisible = hUDToolStripMenuItem.Checked;
+            Properties.Settings.Default.NeighborCountVisible = neighborCountToolStripMenuItem.Checked;
+            Properties.Settings.Default.GridVisible = gridToolStripMenuItem.Checked;
 
             Properties.Settings.Default.Save();
         }
