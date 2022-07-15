@@ -338,6 +338,7 @@ namespace AnthonySeymourGOL
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
+                    // Turn off any cells that are on in universe
                     if (universe[x, y] == true)
                         universe[x, y] = !universe[x, y];
                 }
