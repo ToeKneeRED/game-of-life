@@ -330,6 +330,10 @@ namespace AnthonySeymourGOL
             timer.Enabled = false;
             generations = 0;
             toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+            toolStripButton1.Enabled = true; // Enable Play button
+            startToolStripMenuItem.Enabled = true; // Enable Start menu item
+            toolStripButton2.Enabled = false; // Disable Pause button
+            stopToolStripMenuItem.Enabled = false; // Disable Stop menu item
             graphicsPanel1.Invalidate();
         }
 
@@ -433,6 +437,47 @@ namespace AnthonySeymourGOL
                 timer.Enabled = true;
             }
             toModal.Dispose();
+        }
+
+        private void Randomize()
+        {
+            Random rand = new Random();
+
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+                for (int x = 0; x < universe.GetLength(0); x++)
+                {
+                    if (rand.Next() % 2 == 0)
+                        universe[x, y] = true;
+                    else
+                        universe[x, y] = false;
+
+                }
+            }
+            graphicsPanel1.Invalidate();
+        }
+
+        private void Randomize(int num)
+        {
+            Random rand = new Random(num);
+
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+                for (int x = 0; x < universe.GetLength(0); x++)
+                {
+                    if (rand.Next() % 2 == 0)
+                        universe[x, y] = true;
+                    else
+                        universe[x, y] = false;
+                }
+            }
+            graphicsPanel1.Invalidate();
+        }
+
+        private void fromTimeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newToolStripButton_Click(sender, e);
+            Randomize((int)DateTime.Now.Ticks);
         }
     }
 }
