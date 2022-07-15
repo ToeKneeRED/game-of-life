@@ -154,7 +154,7 @@ namespace AnthonySeymourGOL
             return count;
         }
 
-        // Method for swapping 2D Arrays
+        // Helper method for swapping 2D Arrays
         private void SwapArrays(ref bool[,] arr1, ref bool[,] arr2)
         {
             bool[,] temp = arr1;
@@ -365,14 +365,13 @@ namespace AnthonySeymourGOL
             }
         }
 
+        // Toroidal Menu Item
         private void toroidalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Check if other method is selected
             // If so, clear the universe
             if (finiteToolStripMenuItem.Checked == true)
-            {
                 newToolStripButton_Click(sender, e);
-            }
 
             // Set menu items to proper checked states
             finiteToolStripMenuItem.Checked = false;
@@ -381,14 +380,13 @@ namespace AnthonySeymourGOL
             toroidalToolStripMenuItem1.Checked = true;
         }
 
+        // Finite Menu Item
         private void finiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Check if other method is selected
             // If so, clear the universe
             if (toroidalToolStripMenuItem.Checked == true)
-            {
                 newToolStripButton_Click(sender, e);
-            }
 
             // Set menu items to proper checked states
             toroidalToolStripMenuItem.Checked = false;
@@ -397,6 +395,7 @@ namespace AnthonySeymourGOL
             finiteToolStripMenuItem1.Checked = true;
         }
 
+        // Grid Menu Item
         private void gridToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Invert grid option when clicked
@@ -406,6 +405,7 @@ namespace AnthonySeymourGOL
             graphicsPanel1.Invalidate();
         }
 
+        // HUD Menu Item
         private void hUDToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Invert HUD option when clicked in toolstrip and context menu
@@ -415,6 +415,7 @@ namespace AnthonySeymourGOL
             graphicsPanel1.Invalidate();
         }
 
+        // NeighborCount Menu Item
         private void neighborCountToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Invert neighbor count option when clicked in toolstrip and context menu
@@ -424,6 +425,7 @@ namespace AnthonySeymourGOL
             graphicsPanel1.Invalidate();
         }
 
+        // Run To Menu Item
         private void toToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ModalDialog toModal = new ModalDialog();
@@ -444,10 +446,11 @@ namespace AnthonySeymourGOL
             toModal.Dispose();
         }
 
-        private void Randomize(int num)
+        // Randomize helper method
+        private void Randomize(int seed)
         {
-            // Get random number from num seed
-            Random rand = new Random(num);
+            // Get random number from seed
+            Random rand = new Random(seed);
 
             // Iterate through universe
             for (int y = 0; y < universe.GetLength(1); y++)
