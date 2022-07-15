@@ -32,16 +32,25 @@ namespace AnthonySeymourGOL
         // Randomize seed
         int seed = 0;
 
+        // Timer interval
+        int interval = 35; // ms
+
+        // Number of alive cells
+        int alive = 0;
+
         public Form1()
         {
             InitializeComponent();
 
             // Setup the timer
-            timer.Interval = 35; // milliseconds
+            timer.Interval = interval; // milliseconds
             timer.Tick += Timer_Tick;
             timer.Enabled = false; // start timer paused
 
+            // Toolstrip initializations
             toolStripStatusLabelSeed.Text = "Seed: " + seed.ToString();
+            toolStripStatusLabelInterval.Text = "Interval: " + interval.ToString();
+            toolStripStatusLabelAlive.Text = "Alive: " + alive.ToString();
         }
 
         // Calculate the next generation of cells

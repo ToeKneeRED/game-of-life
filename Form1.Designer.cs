@@ -84,6 +84,8 @@ namespace AnthonySeymourGOL
             this.finiteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.graphicsPanel1 = new AnthonySeymourGOL.GraphicsPanel();
             this.toolStripStatusLabelSeed = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelInterval = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelAlive = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -242,7 +244,7 @@ namespace AnthonySeymourGOL
             // fromSeedToolStripMenuItem
             // 
             this.fromSeedToolStripMenuItem.Name = "fromSeedToolStripMenuItem";
-            this.fromSeedToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.fromSeedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fromSeedToolStripMenuItem.Text = "From Seed";
             this.fromSeedToolStripMenuItem.Click += new System.EventHandler(this.fromSeedToolStripMenuItem_Click);
             // 
@@ -256,7 +258,7 @@ namespace AnthonySeymourGOL
             // fromTimeToolStripMenuItem
             // 
             this.fromTimeToolStripMenuItem.Name = "fromTimeToolStripMenuItem";
-            this.fromTimeToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.fromTimeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fromTimeToolStripMenuItem.Text = "From Time";
             this.fromTimeToolStripMenuItem.Click += new System.EventHandler(this.fromTimeToolStripMenuItem_Click);
             // 
@@ -437,7 +439,9 @@ namespace AnthonySeymourGOL
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelGenerations,
-            this.toolStripStatusLabelSeed});
+            this.toolStripStatusLabelSeed,
+            this.toolStripStatusLabelInterval,
+            this.toolStripStatusLabelAlive});
             this.statusStrip1.Location = new System.Drawing.Point(0, 521);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(660, 22);
@@ -543,6 +547,18 @@ namespace AnthonySeymourGOL
             this.toolStripStatusLabelSeed.Size = new System.Drawing.Size(87, 17);
             this.toolStripStatusLabelSeed.Text = "Current Seed: 0";
             // 
+            // toolStripStatusLabelInterval
+            // 
+            this.toolStripStatusLabelInterval.Name = "toolStripStatusLabelInterval";
+            this.toolStripStatusLabelInterval.Size = new System.Drawing.Size(58, 17);
+            this.toolStripStatusLabelInterval.Text = "Interval: 0";
+            // 
+            // toolStripStatusLabelAlive
+            // 
+            this.toolStripStatusLabelAlive.Name = "toolStripStatusLabelAlive";
+            this.toolStripStatusLabelAlive.Size = new System.Drawing.Size(45, 17);
+            this.toolStripStatusLabelAlive.Text = "Alive: 0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -623,6 +639,8 @@ namespace AnthonySeymourGOL
         private System.Windows.Forms.ToolStripMenuItem fromCurrentSeedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fromTimeToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelSeed;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelInterval;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelAlive;
     }
 }
 
