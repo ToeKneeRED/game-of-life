@@ -17,6 +17,7 @@ namespace AnthonySeymourGOL
 
         // Drawing colors
         Color gridColor = Color.Gray;
+        Color gridx10Color = Color.Black;
         Color cellColor = Color.LightGray;
 
         // The Timer class
@@ -46,6 +47,7 @@ namespace AnthonySeymourGOL
             graphicsPanel1.BackColor = Properties.Settings.Default.BackColor;
             cellColor = Properties.Settings.Default.CellColor;
             gridColor = Properties.Settings.Default.GridColor;
+            gridx10Color = Properties.Settings.Default.Gridx10Color;
 
             // Check settings for user-saved View options
             hUDToolStripMenuItem.Checked = Properties.Settings.Default.HUDVisible;
@@ -200,6 +202,9 @@ namespace AnthonySeymourGOL
             // A Pen for drawing the grid lines (color, width)
             Pen gridPen = new Pen(gridColor, 0.75f);
 
+            // Pen for drawing everything 10th thicker grid line
+            Pen gridx10Pen = new Pen(gridx10Color, 2.25f);
+
             // A Brush for filling living cells interiors (color)
             Brush cellBrush = new SolidBrush(cellColor);
 
@@ -233,8 +238,9 @@ namespace AnthonySeymourGOL
                     }
 
                     // Outline the cell with a pen while grid option is checked
-                    if(gridToolStripMenuItem.Checked == true)
+                    if (gridToolStripMenuItem.Checked == true)
                         e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
+
 
                     if (neighborCountToolStripMenuItem.Checked == true)
                     {
@@ -261,6 +267,25 @@ namespace AnthonySeymourGOL
                     }
                 }
             }
+
+            // Seperate universe loop to draw gridx10 lines over universe's grid rectangles
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+                for (int x = 0; x < universe.GetLength(0); x++)
+                {
+                    RectangleF cellRect = Rectangle.Empty;
+                    cellRect.X = x * cellWidth;
+                    cellRect.Y = y * cellHeight;
+                    cellRect.Width = cellWidth;
+                    cellRect.Height = cellHeight;
+
+                    if (x % 10 == 0)
+                        e.Graphics.DrawLine(gridx10Pen, cellRect.X, cellRect.Y, cellRect.X, cellRect.Y + cellRect.Height);
+                    if (y % 10 == 0)
+                        e.Graphics.DrawLine(gridx10Pen, cellRect.X, cellRect.Y, cellRect.X + cellRect.Width, cellRect.Y);
+                }
+            }
+
             // Cleaning up pens and brushes
             gridPen.Dispose();
             cellBrush.Dispose();
@@ -576,12 +601,47 @@ namespace AnthonySeymourGOL
             graphicsPanel1.Invalidate();
         }
 
+        // Settings Gridx10 Color Menu Item
+        private void gridX10ColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog dlg = new ColorDialog();
+
+            dlg.Color = gridx10Color;
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                gridx10Color = dlg.Color;
+            }
+            dlg.Dispose();
+            graphicsPanel1.Invalidate();
+        }
+
+        // Settings Reset Menu Item
+        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            graphicsPanel1.BackColor = Color.White;
+            cellColor = Color.LightGray;
+            gridColor = Color.Gray;
+            gridx10Color = Color.Black;
+
+            Properties.Settings.Default.BackColor = graphicsPanel1.BackColor;
+            Properties.Settings.Default.CellColor = cellColor;
+            Properties.Settings.Default.GridColor = gridColor;
+            Properties.Settings.Default.Gridx10Color = gridx10Color;
+
+            Properties.Settings.Default.Save();
+
+            graphicsPanel1.Invalidate();
+        }
+
         // FormClosing in case need to cancel the close
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.BackColor = graphicsPanel1.BackColor;
             Properties.Settings.Default.CellColor = cellColor;
             Properties.Settings.Default.GridColor = gridColor;
+            Properties.Settings.Default.Gridx10Color = gridx10Color;
 
             Properties.Settings.Default.HUDVisible = hUDToolStripMenuItem.Checked;
             Properties.Settings.Default.NeighborCountVisible = neighborCountToolStripMenuItem.Checked;
