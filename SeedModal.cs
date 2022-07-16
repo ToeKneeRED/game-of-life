@@ -15,6 +15,8 @@ namespace AnthonySeymourGOL
         public SeedModal()
         {
             InitializeComponent();
+
+            numericUpDown1.Maximum = int.MaxValue;
         }
 
         public int Seed

@@ -496,7 +496,7 @@ namespace AnthonySeymourGOL
             // Seed equal to the ticks representing current date
             // and time then update seed text, clear universe,
             // and randomize based on seed
-            seed = (int)DateTime.Now.Ticks;
+            seed = Math.Abs((int)DateTime.Now.Ticks); // use absolute value to allow for proper setting the seed in SeedModal
             toolStripStatusLabelSeed.Text = "Seed: " + seed.ToString();
             newToolStripButton_Click(sender, e);
             Randomize(seed);
