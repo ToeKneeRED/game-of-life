@@ -24,5 +24,12 @@ namespace AnthonySeymourGOL
             get { return (int)numericUpDown1.Value; }
             set { numericUpDown1.Value = value; }
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Random rand = new Random();
+
+            numericUpDown1.Value = rand.Next(0, int.MaxValue);
+        }
     }
 }
