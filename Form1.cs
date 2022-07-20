@@ -26,6 +26,7 @@ namespace AnthonySeymourGOL
         Color gridColor = Color.Gray;
         Color gridx10Color = Color.Black;
         Color cellColor = Color.LightGray;
+        Color hudColor = Color.Red;
 
         // The Timer class
         Timer timer = new Timer();
@@ -101,7 +102,7 @@ namespace AnthonySeymourGOL
                     if (scratchPad[x, y] == true)
                         scratchPad[x, y] = !scratchPad[x, y];
 
-                    if(universe[x, y] == true)
+                    if (universe[x, y] == true)
                         alive++;
                 }
             }
@@ -245,18 +246,17 @@ namespace AnthonySeymourGOL
 
             // A Pen for drawing the grid lines (color, width)
             Pen gridPen = new Pen(gridColor, 0.75f);
-
             // Pen for drawing thicker grid lines every 10 cells
             Pen gridx10Pen = new Pen(gridx10Color, 2.25f);
-
             // A Brush for filling living cells interiors (color)
             Brush cellBrush = new SolidBrush(cellColor);
 
             // StringFormat for neighbor colors and text
-            StringFormat stringFormat = new StringFormat();
-            stringFormat.Alignment = StringAlignment.Center;
-            stringFormat.LineAlignment = StringAlignment.Center;
+            StringFormat neighborFormat = new StringFormat();
+            neighborFormat.Alignment = StringAlignment.Center;
+            neighborFormat.LineAlignment = StringAlignment.Center;
             Brush neighborCountColor = new SolidBrush(Color.Red);
+            Font font = new Font("Consolas", cellHeight / 2);
 
             // Iterate through the universe in the y, top to bottom
             for (int y = 0; y < universe.GetLength(1); y++)
@@ -271,7 +271,6 @@ namespace AnthonySeymourGOL
                     cellRect.Width = cellWidth;
                     cellRect.Height = cellHeight;
 
-                    Font font = new Font("Consolas", cellHeight / 2);
 
                     int neighbors = 0;
 
@@ -306,7 +305,7 @@ namespace AnthonySeymourGOL
                                 neighborCountColor = new SolidBrush(Color.Green);
 
                             // Draw the neighbor count into the currently iterated cell
-                            e.Graphics.DrawString(neighbors.ToString(), font, neighborCountColor, cellRect, stringFormat);
+                            e.Graphics.DrawString(neighbors.ToString(), font, neighborCountColor, cellRect, neighborFormat);
                         }
                     }
                 }
@@ -335,7 +334,35 @@ namespace AnthonySeymourGOL
                 }
             }
 
+            // Formatting for HUD
+            Font hudFont = new Font("Arial", 12f, FontStyle.Bold);
+            int opacity = 110; // 0-255
+            int bottomLeft = (graphicsPanel1.Bottom / 3);
+            Brush hudBrush = new SolidBrush(Color.FromArgb(opacity, hudColor));
+            StringFormat hudFormat = new StringFormat();
+            hudFormat.Alignment = StringAlignment.Near;
+            hudFormat.LineAlignment = StringAlignment.Far;
+            Rectangle hudRect = new Rectangle(0, 0,
+                graphicsPanel1.ClientRectangle.Width, graphicsPanel1.ClientRectangle.Height);
+
+            string boundaryType;
+
+            if (toroidalToolStripMenuItem.Checked == true)
+                boundaryType = "Toroidal";
+            else
+                boundaryType = "Finite";
+
+            if (hUDToolStripMenuItem.Checked == true)
+            {
+                e.Graphics.DrawString("Generations: " + generations.ToString()
+                    + "\nCell Count: " + alive.ToString()
+                    + "\nBoundary Type: " + boundaryType
+                    + "\nUniverse Size: [Width: " + universe.GetLength(0) + ", Height: " + universe.GetLength(1) + "]",
+                    hudFont, hudBrush, hudRect, hudFormat);
+            }
+
             // Cleaning up pens and brushes
+            hudBrush.Dispose();
             gridPen.Dispose();
             cellBrush.Dispose();
             neighborCountColor.Dispose();
