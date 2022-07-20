@@ -80,6 +80,9 @@ namespace AnthonySeymourGOL
         // Calculate the next generation of cells
         private void NextGeneration()
         {
+            alive = 0;
+
+            // Run To Generation check
             if ((bRunToGeneration == true) && (generations >= runToGeneration))
             {
                 timer.Enabled = false;
@@ -94,6 +97,9 @@ namespace AnthonySeymourGOL
                 {
                     if (scratchPad[x, y] == true)
                         scratchPad[x, y] = !scratchPad[x, y];
+
+                    if(universe[x, y] == true)
+                        alive++;
                 }
             }
 
@@ -110,23 +116,42 @@ namespace AnthonySeymourGOL
                         count = CountNeighborsFinite(x, y);
 
                     // Rules of life
-                    if ((count < 2 || count > 3) && (universe[x, y] == true) ||
-                        (count == 3) && (universe[x, y] == false))
+                    if (((count < 2 || count > 3) && (universe[x, y] == true)) ||
+                        ((count == 3) && (universe[x, y] == false)))
+                    {
+                        // Update scratchPad
                         scratchPad[x, y] = !universe[x, y];
+
+                        // Update alive count
+                        alive--;
+                    } 
+                    //else if((count == 3) && (universe[x, y] == false))
+                    //{
+                    //    scratchPad[x, y] = !universe[x, y];
+                    //    alive--;
+                    //}
                     else if ((count == 2 || count == 3) && (universe[x, y] == true))
+                    {
+                        // Update scratchPad
                         scratchPad[x, y] = universe[x, y];
 
+                        // Update alive count
+                        //alive++;
+                    }
                 }
             }
 
             // Copy scratchPad to universe
             SwapArrays(ref scratchPad, ref universe);
-            
+
             // Increment generation count
             generations++;
 
-            // Update status strip generations
+            // Update status strip
             toolStripStatusLabelGenerations.Text = "Generations: " + generations.ToString();
+            toolStripStatusLabelAlive.Text = "Alive: " + alive.ToString();
+
+            alive = 0;
 
             graphicsPanel1.Invalidate();
         }
@@ -159,7 +184,8 @@ namespace AnthonySeymourGOL
                         yCheck = 0;
 
                     // if cell is on, add to the neighbor count
-                    if (universe[xCheck, yCheck] == true) count++;
+                    if (universe[xCheck, yCheck] == true) 
+                        count++;
                 }
             }
             return count;
@@ -186,7 +212,8 @@ namespace AnthonySeymourGOL
                         continue;
 
                     // if cell is on, add to the neighbor count
-                    if (universe[xCheck, yCheck] == true) count++;
+                    if (universe[xCheck, yCheck] == true) 
+                        count++;
                 }
             }
             return count;
@@ -328,6 +355,15 @@ namespace AnthonySeymourGOL
 
                 // Toggle the cell's state
                 universe[x, y] = !universe[x, y];
+
+                // Update alive cell count
+                if (universe[x, y] == true)
+                    alive++;
+                else
+                    alive--;
+
+                // Update alive status strip
+                toolStripStatusLabelAlive.Text = "Alive: " + alive.ToString();
 
                 // Tell Windows you need to repaint
                 graphicsPanel1.Invalidate();
@@ -580,18 +616,15 @@ namespace AnthonySeymourGOL
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
-                    // if random number generated is even
-                    // cell is on otherwise cell is off
-                    if (rand.Next() % 2 == 0)
+                    // If number is divisble by 3 cell is on
+                    if (rand.Next() % 3 == 0)
                         universe[x, y] = true;
-                    else
-                        universe[x, y] = false;
                 }
             }
             graphicsPanel1.Invalidate();
         }
 
-        // Randomize From Time
+        // Randomize From Time Menu Item
         private void fromTimeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Seed equal to the ticks representing current date
@@ -601,17 +634,30 @@ namespace AnthonySeymourGOL
             toolStripStatusLabelSeed.Text = "Seed: " + seed.ToString();
             newToolStripButton_Click(sender, e);
             Randomize(seed);
+
+            // Update alive count
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+                for (int x = 0; x < universe.GetLength(0); x++)
+                {
+                    if (universe[x, y] == true)
+                        alive++;
+                }
+            }
+            // Update status strip
+            toolStripStatusLabelAlive.Text = "Alive: " + alive.ToString();
+            graphicsPanel1.Invalidate();
         }
 
-        // Randomize From Seed
+        // Randomize From Seed Menu Item
         private void fromSeedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SeedModal modal = new SeedModal();
 
             // Set numericUpDown value to the current seed
             modal.Seed = seed;
-            
-            if(modal.ShowDialog() == DialogResult.OK)
+
+            if (modal.ShowDialog() == DialogResult.OK)
             {
                 // Set seed to the value entered on the modal
                 // Randomize based on that seed
@@ -619,8 +665,22 @@ namespace AnthonySeymourGOL
                 newToolStripButton_Click(sender, e);
                 toolStripStatusLabelSeed.Text = "Seed: " + seed.ToString();
                 Randomize(seed);
+
+                // Update alive count
+                for (int y = 0; y < universe.GetLength(1); y++)
+                {
+                    for (int x = 0; x < universe.GetLength(0); x++)
+                    {
+                        if (universe[x, y] == true)
+                            alive++;
+                    }
+                }
             }
             modal.Dispose();
+
+            // Update status strip
+            toolStripStatusLabelAlive.Text = "Alive: " + alive.ToString();
+            graphicsPanel1.Invalidate();
         }
 
         // Randomize From Current Seed
@@ -629,8 +689,22 @@ namespace AnthonySeymourGOL
             // Clear universe then set seed text
             // Randomize from current seed
             newToolStripButton_Click(sender, e);
-            toolStripStatusLabelSeed.Text = "Seed: " + seed.ToString();
             Randomize(seed);
+
+            // Update alive count
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+                for (int x = 0; x < universe.GetLength(0); x++)
+                {
+                    if (universe[x, y] == true)
+                        alive++;
+                }
+            }
+
+            // Update status strip
+            toolStripStatusLabelAlive.Text = "Alive: " + alive.ToString();
+            toolStripStatusLabelSeed.Text = "Seed: " + seed.ToString();
+            graphicsPanel1.Invalidate();
         }
 
         // Settings Back Color Menu Item
