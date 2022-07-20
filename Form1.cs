@@ -663,6 +663,9 @@ namespace AnthonySeymourGOL
             newToolStripButton_Click(sender, e);
             Randomize(seed);
 
+            // Reset alive count to get next accurate count
+            alive = 0;
+
             // Update alive count
             for (int y = 0; y < universe.GetLength(1); y++)
             {
@@ -695,6 +698,9 @@ namespace AnthonySeymourGOL
                 toolStripStatusLabelSeed.Text = "Seed: " + seed.ToString();
                 Randomize(seed);
 
+                // Reset alive count to get next accurate count
+                alive = 0;
+
                 // Update alive count
                 for (int y = 0; y < universe.GetLength(1); y++)
                 {
@@ -719,6 +725,9 @@ namespace AnthonySeymourGOL
             // Randomize from current seed
             newToolStripButton_Click(sender, e);
             Randomize(seed);
+
+            // Reset alive count to get next accurate count
+            alive = 0;
 
             // Update alive count
             for (int y = 0; y < universe.GetLength(1); y++)
