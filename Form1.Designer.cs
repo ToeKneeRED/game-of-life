@@ -78,9 +78,9 @@ namespace AnthonySeymourGOL
             this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.playToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.pauseToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.nextToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelGenerations = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelSeed = new System.Windows.Forms.ToolStripStatusLabel();
@@ -294,7 +294,7 @@ namespace AnthonySeymourGOL
             this.startToolStripMenuItem.ShortcutKeyDisplayString = "F5";
             this.startToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.startToolStripMenuItem.Text = "Start";
-            this.startToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.startToolStripMenuItem.Click += new System.EventHandler(this.playToolStripButton_Click);
             // 
             // stopToolStripMenuItem
             // 
@@ -303,7 +303,7 @@ namespace AnthonySeymourGOL
             this.stopToolStripMenuItem.ShortcutKeyDisplayString = "F6";
             this.stopToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.stopToolStripMenuItem.Text = "Pause";
-            this.stopToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton2_Click);
+            this.stopToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripButton_Click);
             // 
             // nextToolStripMenuItem
             // 
@@ -311,7 +311,7 @@ namespace AnthonySeymourGOL
             this.nextToolStripMenuItem.ShortcutKeyDisplayString = "F7";
             this.nextToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.nextToolStripMenuItem.Text = "Next";
-            this.nextToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton3_Click);
+            this.nextToolStripMenuItem.Click += new System.EventHandler(this.nextToolStripButton_Click);
             // 
             // toToolStripMenuItem
             // 
@@ -446,9 +446,9 @@ namespace AnthonySeymourGOL
             this.saveToolStripButton,
             this.toolStripSeparator6,
             this.toolStripSeparator7,
-            this.toolStripButton1,
-            this.toolStripButton2,
-            this.toolStripButton3});
+            this.playToolStripButton,
+            this.pauseToolStripButton,
+            this.nextToolStripButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(664, 25);
@@ -493,36 +493,36 @@ namespace AnthonySeymourGOL
             this.toolStripSeparator7.Name = "toolStripSeparator7";
             this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton1
+            // playToolStripButton
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::AnthonySeymourGOL.Properties.Resources.PlayVideo_16x;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "Start Generation Timer";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.playToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.playToolStripButton.Image = global::AnthonySeymourGOL.Properties.Resources.PlayVideo_16x;
+            this.playToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.playToolStripButton.Name = "playToolStripButton";
+            this.playToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.playToolStripButton.Text = "Start Generation Timer";
+            this.playToolStripButton.Click += new System.EventHandler(this.playToolStripButton_Click);
             // 
-            // toolStripButton2
+            // pauseToolStripButton
             // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Enabled = false;
-            this.toolStripButton2.Image = global::AnthonySeymourGOL.Properties.Resources.Pause_grey_16x;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "Pause Generation Timer";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            this.pauseToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.pauseToolStripButton.Enabled = false;
+            this.pauseToolStripButton.Image = global::AnthonySeymourGOL.Properties.Resources.Pause_grey_16x;
+            this.pauseToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.pauseToolStripButton.Name = "pauseToolStripButton";
+            this.pauseToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.pauseToolStripButton.Text = "Pause Generation Timer";
+            this.pauseToolStripButton.Click += new System.EventHandler(this.pauseToolStripButton_Click);
             // 
-            // toolStripButton3
+            // nextToolStripButton
             // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = global::AnthonySeymourGOL.Properties.Resources.NextFrameArrow_16x;
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton3.Text = "Next Generation";
-            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
+            this.nextToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.nextToolStripButton.Image = global::AnthonySeymourGOL.Properties.Resources.NextFrameArrow_16x;
+            this.nextToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.nextToolStripButton.Name = "nextToolStripButton";
+            this.nextToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.nextToolStripButton.Text = "Next Generation";
+            this.nextToolStripButton.Click += new System.EventHandler(this.nextToolStripButton_Click);
             // 
             // statusStrip1
             // 
@@ -735,9 +735,9 @@ namespace AnthonySeymourGOL
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelGenerations;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton playToolStripButton;
+        private System.Windows.Forms.ToolStripButton pauseToolStripButton;
+        private System.Windows.Forms.ToolStripButton nextToolStripButton;
         private System.Windows.Forms.ToolStripMenuItem runToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;

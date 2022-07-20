@@ -80,6 +80,8 @@ namespace AnthonySeymourGOL
         // Calculate the next generation of cells
         private void NextGeneration()
         {
+            // Set to 0 for accurate count from generation
+            // after randomizing
             alive = 0;
 
             // Run To Generation check
@@ -103,6 +105,7 @@ namespace AnthonySeymourGOL
                 }
             }
 
+            // Universe loop
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
@@ -116,8 +119,7 @@ namespace AnthonySeymourGOL
                         count = CountNeighborsFinite(x, y);
 
                     // Rules of life
-                    if (((count < 2 || count > 3) && (universe[x, y] == true)) ||
-                        ((count == 3) && (universe[x, y] == false)))
+                    if ((count < 2 || count > 3) && (universe[x, y] == true))
                     {
                         // Update scratchPad
                         scratchPad[x, y] = !universe[x, y];
@@ -125,18 +127,18 @@ namespace AnthonySeymourGOL
                         // Update alive count
                         alive--;
                     } 
-                    //else if((count == 3) && (universe[x, y] == false))
-                    //{
-                    //    scratchPad[x, y] = !universe[x, y];
-                    //    alive--;
-                    //}
+                    else if((count == 3) && (universe[x, y] == false))
+                    {
+                        // Update scratchPad
+                        scratchPad[x, y] = !universe[x, y];
+
+                        // Update alive count
+                        alive++;
+                    }
                     else if ((count == 2 || count == 3) && (universe[x, y] == true))
                     {
                         // Update scratchPad
                         scratchPad[x, y] = universe[x, y];
-
-                        // Update alive count
-                        //alive++;
                     }
                 }
             }
@@ -151,8 +153,6 @@ namespace AnthonySeymourGOL
             toolStripStatusLabelGenerations.Text = "Generations: " + generations.ToString();
             toolStripStatusLabelAlive.Text = "Alive: " + alive.ToString();
 
-            alive = 0;
-
             graphicsPanel1.Invalidate();
         }
 
@@ -163,6 +163,7 @@ namespace AnthonySeymourGOL
             int xLen = universe.GetLength(0); // universe x length
             int yLen = universe.GetLength(1); // universe y length
 
+            // Universe loop
             for (int yOffset = -1; yOffset <= 1; yOffset++)
             {
                 for (int xOffset = -1; xOffset <= 1; xOffset++)
@@ -377,16 +378,16 @@ namespace AnthonySeymourGOL
         }
 
         // Play Button
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        private void playToolStripButton_Click(object sender, EventArgs e)
         {
             timer.Enabled = true;
 
             // Sanity check
             if (timer.Enabled == true)
             {
-                toolStripButton1.Enabled = false; // Disable Play button
+                playToolStripButton.Enabled = false; // Disable Play button
                 startToolStripMenuItem.Enabled = false; // Disable Start menu item
-                toolStripButton2.Enabled = true; // Enable Pause button
+                pauseToolStripButton.Enabled = true; // Enable Pause button
                 stopToolStripMenuItem.Enabled = true; // Enable Stop menu item
             }
 
@@ -394,22 +395,22 @@ namespace AnthonySeymourGOL
         }
 
         // Pause Button
-        private void toolStripButton2_Click(object sender, EventArgs e)
+        private void pauseToolStripButton_Click(object sender, EventArgs e)
         {
             timer.Enabled = false;
 
             // Sanity check
             if(timer.Enabled == false)
             {
-                toolStripButton1.Enabled = true; // Enable Play button
+                playToolStripButton.Enabled = true; // Enable Play button
                 startToolStripMenuItem.Enabled = true; // Enable Start menu item 
-                toolStripButton2.Enabled = false; // Disable Pause button
+                pauseToolStripButton.Enabled = false; // Disable Pause button
                 stopToolStripMenuItem.Enabled = false; // Disable Stop menu item
             }
         }
 
         // Next Button
-        private void toolStripButton3_Click(object sender, EventArgs e)
+        private void nextToolStripButton_Click(object sender, EventArgs e)
         {
             timer.Enabled = false;
             NextGeneration();
@@ -417,9 +418,9 @@ namespace AnthonySeymourGOL
             // Sanity check
             if (timer.Enabled == false)
             {
-                toolStripButton1.Enabled = true; // Enable Play button
+                playToolStripButton.Enabled = true; // Enable Play button
                 startToolStripMenuItem.Enabled = true; // Enable Start menu item
-                toolStripButton2.Enabled = false; // Disable Pause button
+                pauseToolStripButton.Enabled = false; // Disable Pause button
                 stopToolStripMenuItem.Enabled = false; // Disable Stop menu item
             }
         }
@@ -443,9 +444,9 @@ namespace AnthonySeymourGOL
             toolStripStatusLabelGenerations.Text = "Generations: " + generations.ToString();
 
             // Enable/Disable proper buttons and menu items
-            toolStripButton1.Enabled = true; // Enable Play button
+            playToolStripButton.Enabled = true; // Enable Play button
             startToolStripMenuItem.Enabled = true; // Enable Start menu item
-            toolStripButton2.Enabled = false; // Disable Pause button
+            pauseToolStripButton.Enabled = false; // Disable Pause button
             stopToolStripMenuItem.Enabled = false; // Disable Stop menu item
 
             graphicsPanel1.Invalidate();
@@ -458,15 +459,15 @@ namespace AnthonySeymourGOL
             {
                 // Play
                 case Keys.F5:
-                    toolStripButton1_Click(sender, e);
+                    playToolStripButton_Click(sender, e);
                     break;
                 // Pause
                 case Keys.F6:
-                    toolStripButton2_Click(sender, e);
+                    pauseToolStripButton_Click(sender, e);
                     break;
                 // Next
                 case Keys.F7:
-                    toolStripButton3_Click(sender, e);
+                    nextToolStripButton_Click(sender, e);
                     NextGeneration();
                     break;
                 default:
