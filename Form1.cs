@@ -579,10 +579,12 @@ namespace AnthonySeymourGOL
                 if (Properties.Settings.Default.GenerationInterval != dlg.Interval)
                 {
                     timer.Interval = dlg.Interval;
+
+                    // Update tool strip
                     toolStripStatusLabelInterval.Text = "Interval: " + timer.Interval.ToString();
 
-                    // Update Settings Default with new interval
-                    Properties.Settings.Default.GenerationInterval = timer.Interval;
+                    //// Update Settings Default with new interval
+                    //Properties.Settings.Default.GenerationInterval = timer.Interval;
                 }
 
                 if (dlg.WidthCells != widthCells || dlg.HeightCells != heightCells)
@@ -657,6 +659,7 @@ namespace AnthonySeymourGOL
             if (modal.ShowDialog() == DialogResult.OK)
             {
                 // Set seed to the value entered on the modal
+                // Update status strip
                 // Randomize based on that seed
                 seed = modal.Seed;
                 newToolStripButton_Click(sender, e);
@@ -709,6 +712,7 @@ namespace AnthonySeymourGOL
         {
             ColorDialog dlg = new ColorDialog();
 
+            // Set selected color to the current color
             dlg.Color = graphicsPanel1.BackColor;
 
             if(dlg.ShowDialog() == DialogResult.OK)
@@ -724,6 +728,7 @@ namespace AnthonySeymourGOL
         {
             ColorDialog dlg = new ColorDialog();
 
+            // Set selected color to the current color
             dlg.Color = cellColor;
 
             if (dlg.ShowDialog() == DialogResult.OK)
@@ -740,6 +745,7 @@ namespace AnthonySeymourGOL
         {
             ColorDialog dlg = new ColorDialog();
 
+            // Set selected color to the current color
             dlg.Color = gridColor;
 
             if (dlg.ShowDialog() == DialogResult.OK)
@@ -756,6 +762,7 @@ namespace AnthonySeymourGOL
         {
             ColorDialog dlg = new ColorDialog();
 
+            // Set selected color to the current color
             dlg.Color = gridx10Color;
 
             if (dlg.ShowDialog() == DialogResult.OK)
@@ -787,12 +794,23 @@ namespace AnthonySeymourGOL
             Properties.Settings.Default.WidthCells = 30;
             Properties.Settings.Default.HeightCells = 30;
 
+            // Reset universe to default
+            timer.Interval = Properties.Settings.Default.GenerationInterval;
+            universe = new bool[Properties.Settings.Default.WidthCells, Properties.Settings.Default.HeightCells];
+
+            // Reset alive count
+            alive = 0;
+
+            // Update tool strip status label
+            toolStripStatusLabelInterval.Text = "Interval: " + timer.Interval.ToString();
+            toolStripStatusLabelAlive.Text = "Alive: " + alive.ToString();
+
             Properties.Settings.Default.Save();
 
             graphicsPanel1.Invalidate();
         }
 
-        // Reload Menu Item
+        // Settings Reload Menu Item
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Reload colors back to Settings Default (last saved settings)
@@ -801,9 +819,16 @@ namespace AnthonySeymourGOL
             gridColor = Properties.Settings.Default.GridColor;
             gridx10Color = Properties.Settings.Default.Gridx10Color;
 
-            // Rload universe variables to Settings Default (last saved settings)
+            // Reload universe variables to Settings Default (last saved settings)
             timer.Interval = Properties.Settings.Default.GenerationInterval;
             universe = new bool[Properties.Settings.Default.WidthCells, Properties.Settings.Default.HeightCells];
+
+            // Reset alive count
+            alive = 0;
+
+            // Update tool strip status label
+            toolStripStatusLabelInterval.Text = "Interval: " + timer.Interval.ToString();
+            toolStripStatusLabelAlive.Text = "Alive: " + alive.ToString();
 
             Properties.Settings.Default.Save();
 
