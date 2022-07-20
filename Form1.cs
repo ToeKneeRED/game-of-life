@@ -323,6 +323,7 @@ namespace AnthonySeymourGOL
                     cellRect.Width = cellWidth;
                     cellRect.Height = cellHeight;
 
+                    // If grid is shown, draw thicker line every 10 cells 
                     if (gridToolStripMenuItem.Checked == true)
                     {
                         if (x % 10 == 0)
@@ -488,9 +489,6 @@ namespace AnthonySeymourGOL
             toroidalToolStripMenuItem.Checked = true;
             finiteToolStripMenuItem1.Checked = false;
             toroidalToolStripMenuItem1.Checked = true;
-
-            // Update Settings Default state
-            Properties.Settings.Default.ToroidalState = true;
         }
 
         // Finite Menu Item
@@ -506,9 +504,6 @@ namespace AnthonySeymourGOL
             finiteToolStripMenuItem.Checked = true;
             toroidalToolStripMenuItem1.Checked = false;
             finiteToolStripMenuItem1.Checked = true;
-
-            // Update Settings Default state
-            Properties.Settings.Default.ToroidalState = false;
         }
 
         // Grid Menu Item
@@ -796,6 +791,30 @@ namespace AnthonySeymourGOL
             graphicsPanel1.Invalidate();
         }
 
+        // Reload Menu Item
+        private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Reload colors back to Settings Default (last saved settings)
+            graphicsPanel1.BackColor = Properties.Settings.Default.BackColor;
+            cellColor = Properties.Settings.Default.CellColor;
+            gridColor = Properties.Settings.Default.GridColor;
+            gridx10Color = Properties.Settings.Default.Gridx10Color;
+
+            // Rload universe variables to Settings Default (last saved settings)
+            timer.Interval = Properties.Settings.Default.GenerationInterval;
+            universe = new bool[Properties.Settings.Default.WidthCells, Properties.Settings.Default.HeightCells];
+
+            Properties.Settings.Default.Save();
+
+            graphicsPanel1.Invalidate();
+        }
+
+        // Save Menu Item
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
         // FormClosing in case need to cancel the close
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -820,5 +839,6 @@ namespace AnthonySeymourGOL
 
             Properties.Settings.Default.Save();
         }
+
     }
 }
