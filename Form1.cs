@@ -75,6 +75,7 @@ namespace AnthonySeymourGOL
                 return;
             }
 
+            // Clear scratchPad before applying rules to the generation
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
@@ -118,6 +119,7 @@ namespace AnthonySeymourGOL
             graphicsPanel1.Invalidate();
         }
 
+        // Toroidal Neighbor Count
         private int CountNeighborsToroidal(int x, int y)
         {
             int count = 0;
@@ -151,6 +153,7 @@ namespace AnthonySeymourGOL
             return count;
         }
 
+        // Finite Neighbor Count
         private int CountNeighborsFinite(int x, int y)
         {
             int count = 0;
@@ -202,7 +205,7 @@ namespace AnthonySeymourGOL
             // A Pen for drawing the grid lines (color, width)
             Pen gridPen = new Pen(gridColor, 0.75f);
 
-            // Pen for drawing everything 10th thicker grid line
+            // Pen for drawing thicker grid lines every 10 cells
             Pen gridx10Pen = new Pen(gridx10Color, 2.25f);
 
             // A Brush for filling living cells interiors (color)
@@ -269,6 +272,7 @@ namespace AnthonySeymourGOL
             }
 
             // Seperate universe loop to draw gridx10 lines over universe's grid rectangles
+            // Not a great way but is a way
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
@@ -279,10 +283,13 @@ namespace AnthonySeymourGOL
                     cellRect.Width = cellWidth;
                     cellRect.Height = cellHeight;
 
-                    if (x % 10 == 0)
-                        e.Graphics.DrawLine(gridx10Pen, cellRect.X, cellRect.Y, cellRect.X, cellRect.Y + cellRect.Height);
-                    if (y % 10 == 0)
-                        e.Graphics.DrawLine(gridx10Pen, cellRect.X, cellRect.Y, cellRect.X + cellRect.Width, cellRect.Y);
+                    if (gridToolStripMenuItem.Checked == true)
+                    {
+                        if (x % 10 == 0)
+                            e.Graphics.DrawLine(gridx10Pen, cellRect.X, cellRect.Y, cellRect.X, cellRect.Y + cellRect.Height);
+                        if (y % 10 == 0)
+                            e.Graphics.DrawLine(gridx10Pen, cellRect.X, cellRect.Y, cellRect.X + cellRect.Width, cellRect.Y);
+                    }
                 }
             }
 
@@ -326,6 +333,7 @@ namespace AnthonySeymourGOL
         {
             timer.Enabled = true;
 
+            // Sanity check
             if (timer.Enabled == true)
             {
                 toolStripButton1.Enabled = false; // Disable Play button
@@ -342,6 +350,7 @@ namespace AnthonySeymourGOL
         {
             timer.Enabled = false;
 
+            // Sanity check
             if(timer.Enabled == false)
             {
                 toolStripButton1.Enabled = true; // Enable Play button
@@ -357,6 +366,7 @@ namespace AnthonySeymourGOL
             timer.Enabled = false;
             NextGeneration();
 
+            // Sanity check
             if (timer.Enabled == false)
             {
                 toolStripButton1.Enabled = true; // Enable Play button
@@ -373,6 +383,7 @@ namespace AnthonySeymourGOL
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
+                    // "Clear" the universe
                     // Turn off any cells that are on in universe
                     if (universe[x, y] == true)
                         universe[x, y] = !universe[x, y];
@@ -382,10 +393,13 @@ namespace AnthonySeymourGOL
             timer.Enabled = false;
             generations = 0;
             toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+
+            // Enable/Disable proper buttons and menu items
             toolStripButton1.Enabled = true; // Enable Play button
             startToolStripMenuItem.Enabled = true; // Enable Start menu item
             toolStripButton2.Enabled = false; // Disable Pause button
             stopToolStripMenuItem.Enabled = false; // Disable Stop menu item
+
             graphicsPanel1.Invalidate();
         }
 
@@ -551,7 +565,7 @@ namespace AnthonySeymourGOL
         private void fromCurrentSeedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Clear universe then set seed text
-            // and randomize from current seed
+            // Randomize from current seed
             newToolStripButton_Click(sender, e);
             toolStripStatusLabelSeed.Text = "Seed: " + seed.ToString();
             Randomize(seed);
@@ -566,6 +580,7 @@ namespace AnthonySeymourGOL
 
             if(dlg.ShowDialog() == DialogResult.OK)
             {
+                // Set the graphics panel's back color to the selected color
                 graphicsPanel1.BackColor = dlg.Color;
             }
             dlg.Dispose();
@@ -580,6 +595,7 @@ namespace AnthonySeymourGOL
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
+                // Set cellColor to the selected color
                 cellColor = dlg.Color;
             }
             dlg.Dispose();
@@ -595,6 +611,7 @@ namespace AnthonySeymourGOL
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
+                // Set gridColor to the selected color
                 gridColor = dlg.Color;
             }
             dlg.Dispose();
@@ -610,6 +627,7 @@ namespace AnthonySeymourGOL
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
+                // Set gridx10Color to the selected color
                 gridx10Color = dlg.Color;
             }
             dlg.Dispose();
@@ -619,12 +637,13 @@ namespace AnthonySeymourGOL
         // Settings Reset Menu Item
         private void resetToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            // Reset colors back to default values
             graphicsPanel1.BackColor = Color.White;
             cellColor = Color.LightGray;
             gridColor = Color.Gray;
             gridx10Color = Color.Black;
 
+            // Reset Settings Default colors back to default values
             Properties.Settings.Default.BackColor = graphicsPanel1.BackColor;
             Properties.Settings.Default.CellColor = cellColor;
             Properties.Settings.Default.GridColor = gridColor;
@@ -638,11 +657,13 @@ namespace AnthonySeymourGOL
         // FormClosing in case need to cancel the close
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // Save current color options to Settings Default
             Properties.Settings.Default.BackColor = graphicsPanel1.BackColor;
             Properties.Settings.Default.CellColor = cellColor;
             Properties.Settings.Default.GridColor = gridColor;
             Properties.Settings.Default.Gridx10Color = gridx10Color;
 
+            // Save current visibility options to Settings Default
             Properties.Settings.Default.HUDVisible = hUDToolStripMenuItem.Checked;
             Properties.Settings.Default.NeighborCountVisible = neighborCountToolStripMenuItem.Checked;
             Properties.Settings.Default.GridVisible = gridToolStripMenuItem.Checked;
