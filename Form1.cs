@@ -471,8 +471,14 @@ namespace AnthonySeymourGOL
             }
 
             timer.Enabled = false;
+
+            // Reset counts as the universe is reset
             generations = 0;
+            alive = 0;
+
+            // Update tool strip status label
             toolStripStatusLabelGenerations.Text = "Generations: " + generations.ToString();
+            toolStripStatusLabelAlive.Text = "Alive: " + alive.ToString();
 
             // Enable/Disable proper buttons and menu items
             playToolStripButton.Enabled = true; // Enable Play button
@@ -846,12 +852,16 @@ namespace AnthonySeymourGOL
             timer.Interval = Properties.Settings.Default.GenerationInterval;
             universe = new bool[Properties.Settings.Default.WidthCells, Properties.Settings.Default.HeightCells];
 
-            // Reset alive count
+            // Reset counts to keep them accurate
             alive = 0;
+            generations = 0;
+
+            seed = 1337; // default seed
 
             // Update tool strip status label
             toolStripStatusLabelInterval.Text = "Interval: " + timer.Interval.ToString();
             toolStripStatusLabelAlive.Text = "Alive: " + alive.ToString();
+            toolStripStatusLabelGenerations.Text = "Generations: " + generations.ToString();
 
             Properties.Settings.Default.Save();
 
@@ -876,12 +886,14 @@ namespace AnthonySeymourGOL
             timer.Interval = Properties.Settings.Default.GenerationInterval;
             universe = new bool[Properties.Settings.Default.WidthCells, Properties.Settings.Default.HeightCells];
 
-            // Reset alive count
+            // Reset counts
             alive = 0;
+            generations = 0;
 
             // Update tool strip status label
             toolStripStatusLabelInterval.Text = "Interval: " + timer.Interval.ToString();
             toolStripStatusLabelAlive.Text = "Alive: " + alive.ToString();
+            toolStripStatusLabelGenerations.Text = "Generations: " + generations.ToString();
 
             Properties.Settings.Default.Save();
 
