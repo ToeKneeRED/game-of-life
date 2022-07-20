@@ -644,28 +644,28 @@ namespace AnthonySeymourGOL
             // backColorToolStripMenuItem1
             // 
             this.backColorToolStripMenuItem1.Name = "backColorToolStripMenuItem1";
-            this.backColorToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.backColorToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
             this.backColorToolStripMenuItem1.Text = "Back Color";
             this.backColorToolStripMenuItem1.Click += new System.EventHandler(this.backColorToolStripMenuItem_Click);
             // 
             // cellColorToolStripMenuItem1
             // 
             this.cellColorToolStripMenuItem1.Name = "cellColorToolStripMenuItem1";
-            this.cellColorToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.cellColorToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
             this.cellColorToolStripMenuItem1.Text = "Cell Color";
             this.cellColorToolStripMenuItem1.Click += new System.EventHandler(this.cellColorToolStripMenuItem_Click);
             // 
             // gridColorToolStripMenuItem1
             // 
             this.gridColorToolStripMenuItem1.Name = "gridColorToolStripMenuItem1";
-            this.gridColorToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.gridColorToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
             this.gridColorToolStripMenuItem1.Text = "Grid Color";
             this.gridColorToolStripMenuItem1.Click += new System.EventHandler(this.gridColorToolStripMenuItem_Click);
             // 
             // gridx10ColorToolStripMenuItem1
             // 
             this.gridx10ColorToolStripMenuItem1.Name = "gridx10ColorToolStripMenuItem1";
-            this.gridx10ColorToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.gridx10ColorToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
             this.gridx10ColorToolStripMenuItem1.Text = "Grid x10 Color";
             this.gridx10ColorToolStripMenuItem1.Click += new System.EventHandler(this.gridX10ColorToolStripMenuItem_Click);
             // 
@@ -690,6 +690,7 @@ namespace AnthonySeymourGOL
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

@@ -74,20 +74,20 @@ namespace AnthonySeymourGOL
             // widthLabel
             // 
             this.widthLabel.AutoSize = true;
-            this.widthLabel.Location = new System.Drawing.Point(42, 47);
+            this.widthLabel.Location = new System.Drawing.Point(25, 46);
             this.widthLabel.Name = "widthLabel";
-            this.widthLabel.Size = new System.Drawing.Size(111, 13);
+            this.widthLabel.Size = new System.Drawing.Size(128, 13);
             this.widthLabel.TabIndex = 4;
-            this.widthLabel.Text = "Cell Width in Universe";
+            this.widthLabel.Text = "Width of Universe in Cells";
             // 
             // heightLabel
             // 
             this.heightLabel.AutoSize = true;
-            this.heightLabel.Location = new System.Drawing.Point(39, 78);
+            this.heightLabel.Location = new System.Drawing.Point(22, 78);
             this.heightLabel.Name = "heightLabel";
-            this.heightLabel.Size = new System.Drawing.Size(114, 13);
+            this.heightLabel.Size = new System.Drawing.Size(131, 13);
             this.heightLabel.TabIndex = 5;
-            this.heightLabel.Text = "Cell Height in Universe";
+            this.heightLabel.Text = "Height of Universe in Cells";
             // 
             // okButton
             // 
@@ -104,7 +104,7 @@ namespace AnthonySeymourGOL
             this.AcceptButton = this.okButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(259, 143);
+            this.ClientSize = new System.Drawing.Size(276, 147);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.heightLabel);
             this.Controls.Add(this.widthLabel);
@@ -112,14 +112,12 @@ namespace AnthonySeymourGOL
             this.Controls.Add(this.widthNumericUpDown);
             this.Controls.Add(this.intervalNumericUpDown);
             this.Controls.Add(this.intervalLabel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "OptionsModal";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Options";
-            this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.intervalNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.widthNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightNumericUpDown)).EndInit();

@@ -105,5 +105,53 @@ namespace AnthonySeymourGOL.Properties {
                 this["GridVisible"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public int WidthCells {
+            get {
+                return ((int)(this["WidthCells"]));
+            }
+            set {
+                this["WidthCells"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public int HeightCells {
+            get {
+                return ((int)(this["HeightCells"]));
+            }
+            set {
+                this["HeightCells"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("35")]
+        public int GenerationInterval {
+            get {
+                return ((int)(this["GenerationInterval"]));
+            }
+            set {
+                this["GenerationInterval"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ToroidalState {
+            get {
+                return ((bool)(this["ToroidalState"]));
+            }
+            set {
+                this["ToroidalState"] = value;
+            }
+        }
     }
 }

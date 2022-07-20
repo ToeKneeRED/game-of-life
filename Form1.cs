@@ -12,8 +12,14 @@ namespace AnthonySeymourGOL
 {
     public partial class Form1 : Form
     {
-        bool[,] universe = new bool[30, 30];
-        bool[,] scratchPad = new bool[30, 30];
+        // Default amount of cells in universe
+        // Only used to initialize the universe on startup
+        static int defaultUniverseWidth = Properties.Settings.Default.WidthCells;
+        static int defaultUniverseHeight = Properties.Settings.Default.HeightCells;
+
+        // The actual universe
+        bool[,] universe = new bool[defaultUniverseWidth, defaultUniverseHeight];
+        bool[,] scratchPad = new bool[defaultUniverseWidth, defaultUniverseHeight];
 
         // Drawing colors
         Color gridColor = Color.Gray;
@@ -31,10 +37,10 @@ namespace AnthonySeymourGOL
         int? runToGeneration = null;
 
         // Randomize seed
-        int seed = 0;
+        int seed = 1337;
 
         // Timer interval
-        int interval = 35; // ms
+        int interval = Properties.Settings.Default.GenerationInterval; // ms
 
         // Number of alive cells
         int alive = 0;
@@ -53,6 +59,12 @@ namespace AnthonySeymourGOL
             hUDToolStripMenuItem.Checked = Properties.Settings.Default.HUDVisible;
             neighborCountToolStripMenuItem.Checked = Properties.Settings.Default.NeighborCountVisible;
             gridToolStripMenuItem.Checked = Properties.Settings.Default.GridVisible;
+
+            // Check settings for user-saved boundary options
+            toroidalToolStripMenuItem.Checked = Properties.Settings.Default.ToroidalState;
+            toroidalToolStripMenuItem1.Checked = Properties.Settings.Default.ToroidalState;
+            finiteToolStripMenuItem.Checked = !Properties.Settings.Default.ToroidalState;
+            finiteToolStripMenuItem1.Checked = !Properties.Settings.Default.ToroidalState;
 
             // Setup the timer
             timer.Interval = interval; // milliseconds
@@ -392,7 +404,7 @@ namespace AnthonySeymourGOL
 
             timer.Enabled = false;
             generations = 0;
-            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+            toolStripStatusLabelGenerations.Text = "Generations: " + generations.ToString();
 
             // Enable/Disable proper buttons and menu items
             toolStripButton1.Enabled = true; // Enable Play button
@@ -439,6 +451,9 @@ namespace AnthonySeymourGOL
             toroidalToolStripMenuItem.Checked = true;
             finiteToolStripMenuItem1.Checked = false;
             toroidalToolStripMenuItem1.Checked = true;
+
+            // Update Settings Default state
+            Properties.Settings.Default.ToroidalState = true;
         }
 
         // Finite Menu Item
@@ -454,6 +469,9 @@ namespace AnthonySeymourGOL
             finiteToolStripMenuItem.Checked = true;
             toroidalToolStripMenuItem1.Checked = false;
             finiteToolStripMenuItem1.Checked = true;
+
+            // Update Settings Default state
+            Properties.Settings.Default.ToroidalState = false;
         }
 
         // Grid Menu Item
@@ -505,6 +523,50 @@ namespace AnthonySeymourGOL
                 timer.Enabled = true;
             }
             toModal.Dispose();
+        }
+
+        // Options Menu Item
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OptionsModal dlg = new OptionsModal();
+
+            // Variables to check the modal's input against
+            int widthCells = Properties.Settings.Default.WidthCells;
+            int heightCells = Properties.Settings.Default.HeightCells;
+
+            // Set values of numericUpDowns to current respective values
+            dlg.Interval = timer.Interval;
+            dlg.WidthCells = widthCells;
+            dlg.HeightCells = heightCells;
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                // Check if interval has been changed
+                // Don't clear universe if only interval changes
+                if (Properties.Settings.Default.GenerationInterval != dlg.Interval)
+                {
+                    timer.Interval = dlg.Interval;
+                    toolStripStatusLabelInterval.Text = "Interval: " + timer.Interval.ToString();
+
+                    // Update Settings Default with new interval
+                    Properties.Settings.Default.GenerationInterval = timer.Interval;
+                }
+
+                if (dlg.WidthCells != widthCells || dlg.HeightCells != heightCells)
+                {
+                    newToolStripButton_Click(sender, e); // Call this to clear universe to not repeat code
+
+                    // Remake the universe with the new size
+                    universe = new bool[dlg.WidthCells, dlg.HeightCells];
+                    scratchPad = new bool[dlg.WidthCells, dlg.HeightCells];
+
+                    // Update Settings Default with new universe width and height
+                    Properties.Settings.Default.WidthCells = dlg.WidthCells;
+                    Properties.Settings.Default.HeightCells = dlg.HeightCells;
+                }
+            }
+            dlg.Dispose();
+            graphicsPanel1.Invalidate();
         }
 
         // Randomize helper method
@@ -649,15 +711,14 @@ namespace AnthonySeymourGOL
             Properties.Settings.Default.GridColor = gridColor;
             Properties.Settings.Default.Gridx10Color = gridx10Color;
 
+            // Reset Settings Default interval, and amount of cells to default values
+            Properties.Settings.Default.GenerationInterval = 35; // ms
+            Properties.Settings.Default.WidthCells = 30;
+            Properties.Settings.Default.HeightCells = 30;
+
             Properties.Settings.Default.Save();
 
             graphicsPanel1.Invalidate();
-        }
-
-        // Options Menu Item
-        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
 
         // FormClosing in case need to cancel the close
@@ -674,8 +735,15 @@ namespace AnthonySeymourGOL
             Properties.Settings.Default.NeighborCountVisible = neighborCountToolStripMenuItem.Checked;
             Properties.Settings.Default.GridVisible = gridToolStripMenuItem.Checked;
 
+            // Save current generation & universe variables to Settings Default
+            Properties.Settings.Default.GenerationInterval = timer.Interval;
+            Properties.Settings.Default.WidthCells = universe.GetLength(0); // x dimension
+            Properties.Settings.Default.HeightCells = universe.GetLength(1); // y dimension
+
+            // Save current boundary check option to Settings Default
+            Properties.Settings.Default.ToroidalState = toroidalToolStripMenuItem.Checked;
+
             Properties.Settings.Default.Save();
         }
-
     }
 }

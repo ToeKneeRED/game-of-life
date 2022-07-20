@@ -15,6 +15,12 @@ namespace AnthonySeymourGOL
         public OptionsModal()
         {
             InitializeComponent();
+
+            // Set maximum values of numericUpDowns
+            // to int max to accept more inputs
+            intervalNumericUpDown.Maximum = int.MaxValue;
+            widthNumericUpDown.Maximum = int.MaxValue;
+            heightNumericUpDown.Maximum = int.MaxValue;
         }
 
         // Timer interval
@@ -25,17 +31,17 @@ namespace AnthonySeymourGOL
         }
 
         // Cell Width in Universe
-        public float CellWidth
+        public int WidthCells
         {
-            get { return (float)widthNumericUpDown.Value; }
-            set { widthNumericUpDown.Value = (decimal)value; }
+            get { return (int)widthNumericUpDown.Value; }
+            set { widthNumericUpDown.Value = value; }
         }
 
         // Cell Height in Universe
-        public float CellHeight
+        public int HeightCells
         {
-            get { return (float)heightNumericUpDown.Value; }
-            set { heightNumericUpDown.Value = (decimal)value; }
+            get { return (int)heightNumericUpDown.Value; }
+            set { heightNumericUpDown.Value = value; }
         }
     }
 }
