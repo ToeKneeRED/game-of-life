@@ -552,7 +552,7 @@ namespace AnthonySeymourGOL
             if(modal.ShowDialog() == DialogResult.OK)
             {
                 // Set seed to the value entered on the modal
-                // and randomize based on that seed
+                // Randomize based on that seed
                 seed = modal.Seed;
                 newToolStripButton_Click(sender, e);
                 toolStripStatusLabelSeed.Text = "Seed: " + seed.ToString();
@@ -652,6 +652,12 @@ namespace AnthonySeymourGOL
             Properties.Settings.Default.Save();
 
             graphicsPanel1.Invalidate();
+        }
+
+        // Options Menu Item
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
 
         // FormClosing in case need to cancel the close

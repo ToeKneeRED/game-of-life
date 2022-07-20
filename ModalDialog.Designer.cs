@@ -80,7 +80,7 @@ namespace AnthonySeymourGOL
             this.MinimizeBox = false;
             this.Name = "ModalDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "ModalDialog";
+            this.Text = "Run To Generation";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
