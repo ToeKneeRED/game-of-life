@@ -11,6 +11,8 @@ using System.Windows.Forms;
 
 namespace AnthonySeymourGOL
 {
+
+    // Github repository link: https://github.com/ToeKneeRED/game-of-life
     public partial class Form1 : Form
     {
         // Default amount of cells in universe
