@@ -816,6 +816,16 @@ namespace AnthonySeymourGOL
             Properties.Settings.Default.GridColor = gridColor;
             Properties.Settings.Default.Gridx10Color = gridx10Color;
 
+            // Reset visibility options to default values
+            gridToolStripMenuItem.Checked = true;
+            neighborCountToolStripMenuItem.Checked = true;
+            hUDToolStripMenuItem.Checked = true;
+
+            // Reset Settings Default visibility options back to default values
+            Properties.Settings.Default.HUDVisible = hUDToolStripMenuItem.Checked;
+            Properties.Settings.Default.NeighborCountVisible = neighborCountToolStripMenuItem.Checked;
+            Properties.Settings.Default.GridVisible = gridToolStripMenuItem.Checked;
+
             // Reset Settings Default interval, and amount of cells to default values
             Properties.Settings.Default.GenerationInterval = 35; // ms
             Properties.Settings.Default.WidthCells = 30;
@@ -845,6 +855,11 @@ namespace AnthonySeymourGOL
             cellColor = Properties.Settings.Default.CellColor;
             gridColor = Properties.Settings.Default.GridColor;
             gridx10Color = Properties.Settings.Default.Gridx10Color;
+
+            // Reload visibility options to Settings Default (last saved settings)
+            gridToolStripMenuItem.Checked = Properties.Settings.Default.GridVisible;
+            neighborCountToolStripMenuItem.Checked = Properties.Settings.Default.NeighborCountVisible;
+            hUDToolStripMenuItem.Checked = Properties.Settings.Default.HUDVisible;
 
             // Reload universe variables to Settings Default (last saved settings)
             timer.Interval = Properties.Settings.Default.GenerationInterval;
